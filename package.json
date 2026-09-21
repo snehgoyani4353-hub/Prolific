@@ -1,0 +1,13 @@
+{
+  "name": "prolific-company-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 3000",
+    "serve": "npx serve -l 3000"
+  },
+  "devDependencies": {
+    "vite": "^4.5.3"
+  }
+}

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROLIFIC | Manager Operational Control Hub</title>
+  <meta name="description" content="Prolific Head Designer Dashboard - Team task delegation, employee submission check, and regional execution.">
+  <link rel="icon" type="image/png" href="images/logo-dark.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="wf-portal-body">
+
+  <!-- MANAGER PORTAL HEADER -->
+  <header class="wf-header">
+    <div class="wf-header-left">
+      <a href="index.html" class="wf-logo-link" title="Prolific Home">
+        <img src="images/logo-dark.png" alt="PROLIFIC" class="wf-header-logo-img">
+      </a>
+      <div class="wf-brand-info">
+        <span class="wf-portal-pill">HEAD DESIGNER WORKSPACE</span>
+        <span class="wf-engine-subtext">Enterprise Workflow Engine</span>
+      </div>
+    </div>
+
+    <div class="wf-header-right">
+      <a href="login.html" class="btn-back-login" title="Return to Secure Login Portal">← Back to Login</a>
+      <button class="btn-switch-mgr-header" id="openSwitchMgrModal">Switch Head Designer</button>
+      <a href="index.html" class="btn-global-exit" title="Exit to Public Website">Exit to Website</a>
+      <div class="user-profile-badge" id="mgrProfileBadge">
+        <label for="mgrAvatarInput" class="user-avatar-upload-label" title="Click circular photo to add/change profile photo">
+          <input type="file" id="mgrAvatarInput" accept="image/*" style="display: none;">
+          <div class="user-avatar-circle" id="mgrAvatarCircle">
+            <img src="" id="mgrAvatarImg" class="user-avatar-img" alt="Head Designer Photo" style="display: none;">
+            <span class="user-avatar-initials" id="mgrAvatarInitials">S</span>
+            <span class="avatar-camera-icon" title="Add / Change Photo">📷</span>
+          </div>
+        </label>
+        <span id="mgrHeaderUserName">Shashikant Bhai (HEAD DESIGNER)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- DUAL SCROLLER WORKSPACE LAYOUT -->
+  <div class="wf-workspace-layout">
+
+    <!-- LEFT SIDEBAR: HEAD DESIGNERS LIST & ROSTER (SCROLLER 1) -->
+    <aside class="wf-sidebar">
+      <div class="sidebar-title">
+        <span>Head Designer Workspaces</span>
+      </div>
+
+      <!-- Category: Head Designers -->
+      <div class="personnel-category">
+        <div class="cat-header">
+          <span>Head Designers</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="sidebarMgrList">
+          <!-- Populated dynamically via JS -->
+        </ul>
+      </div>
+
+      <!-- Category: Regional City Branches (12) -->
+      <div class="personnel-category" style="margin-top: 20px;">
+        <div class="cat-header">
+          <span>Branch Work Overview</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="mgrSidebarCityList">
+          <li class="person-item active" data-city="Ahmedabad" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">AH</span>
+            <div class="person-meta"><span class="name">Ahmedabad (Central)</span></div>
+          </li>
+          <li class="person-item" data-city="Surat" style="cursor: pointer;">
+            <span class="avatar-badge pink-badge">SU</span>
+            <div class="person-meta"><span class="name">Surat Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Vadodara" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">VA</span>
+            <div class="person-meta"><span class="name">Vadodara Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Rajkot" style="cursor: pointer;">
+            <span class="avatar-badge purple-badge">RA</span>
+            <div class="person-meta"><span class="name">Rajkot Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Bhavnagar" style="cursor: pointer;">
+            <span class="avatar-badge yellow-badge">BH</span>
+            <div class="person-meta"><span class="name">Bhavnagar Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Jamnagar" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">JA</span>
+            <div class="person-meta"><span class="name">Jamnagar Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Gandhinagar" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">GA</span>
+            <div class="person-meta"><span class="name">Gandhinagar Branch</span></div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT AREA (SCROLLER 2) -->
+    <main class="wf-main-content">
+
+      <!-- HEAD DESIGNER CLIENT APPOINTMENT ALERT BANNER -->
+      <div id="mgrApptAlertBanner" style="display: none; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 2px solid #F59E0B; border-radius: 14px; padding: 16px 20px; margin-bottom: 22px; box-shadow: 0 6px 20px rgba(245, 158, 11, 0.18); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="font-size: 2rem; animation: pulse 1.5s infinite;">🚨</span>
+          <div>
+            <div style="font-weight: 800; color: #92400E; font-size: 1rem; letter-spacing: 0.02em;">
+              EXECUTIVE MEETING ALERT: FOUNDER HAS ASSIGNED A CLIENT CONSULTATION TO YOU!
+            </div>
+            <div id="mgrAlertDetailsText" style="font-size: 0.86rem; color: #B45309; margin-top: 3px;">
+              Founder Nilesh / Gaurav has scheduled a client meeting. Check client project scope and directives below.
+            </div>
+          </div>
+        </div>
+        <button type="button" id="btnDismissMgrApptAlert" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%); color: #FFFFFF; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);">
+          ✓ Acknowledge &amp; View Meeting
+        </button>
+      </div>
+
+      <!-- ============================================================
+           SECTION 0: 🤝 CLIENT CONSULTATION MEETINGS DELEGATED BY FOUNDER
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrDelegatedApptsSection">
+        <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="icon-user-badge">🤝</span>
+            <h2>CLIENT CONSULTATIONS DELEGATED BY FOUNDER (<span id="mgrApptActiveTitle">Shashikant Bhai</span>)</h2>
+          </div>
+          <span class="badge-total-bookings" id="mgrApptCountBadge" style="background: rgba(2, 132, 199, 0.12); color: #0284C7; border: 1.5px solid #0284C7; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">0 Assigned Meetings</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 180px;">REF ID &amp; CLIENT</th>
+                <th style="width: 200px;">CLIENT CONTACT</th>
+                <th style="width: 210px;">SCHEDULED DATE &amp; TIME</th>
+                <th>SERVICE SCOPE &amp; FOUNDER DIRECTIVES</th>
+                <th style="width: 140px;">STATUS</th>
+                <th style="width: 150px;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="mgrDelegatedApptsTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 1: HEAD DESIGNER'S OWN ASSIGNED TASKS (FROM FOUNDER)
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrMyTasksSection">
+        <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="icon-user-badge">🚨</span>
+            <h2>MY ASSIGNED TASKS FROM FOUNDER (<span id="mgrActiveTitle">Shashikant Bhai</span>)</h2>
+          </div>
+          <span style="font-size: 0.82rem; color: #94A3B8;">🚨 Urgent tasks prioritized at the top</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 120px;">PRIORITY</th>
+                <th style="width: 130px;">CITY</th>
+                <th>TASK &amp; SPECIFICATION DETAILS</th>
+                <th style="width: 160px;">ASSIGNED BY</th>
+                <th style="width: 180px;">SUBMISSION DEADLINE</th>
+                <th style="width: 140px;">STATUS</th>
+                <th style="width: 110px;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="mgrFounderTasksTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 1.5: 💎 DESIGN & MATERIAL SELECTION APPROVALS (SUBMITTED TO FOUNDERS)
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrSelectionSection">
+        <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="icon-user-badge">💎</span>
+            <div>
+              <h2 style="margin: 0; font-size: 1.2rem; color: #1E2532;">
+                MATERIAL &amp; DESIGN SELECTION APPROVALS (<span id="mgrSelectionActiveTitle">Shashikant Bhai</span>)
+              </h2>
+              <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">
+                🔒 <strong>Governance Rule:</strong> Selections require Founder sign-off before Head Designer can proceed with execution.
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span id="mgrSelectionCountBadge" style="background: rgba(217, 119, 6, 0.12); color: #D97706; border: 1.5px solid #F59E0B; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">0 Selections Pending</span>
+          </div>
+        </div>
+
+        <!-- Submit New Selection Form -->
+        <div style="background: #FAF8F5; border: 1.5px solid #E5DCCB; border-radius: 14px; padding: 20px; margin-bottom: 22px;">
+          <div style="font-weight: 800; font-size: 0.95rem; color: #8A6836; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>➕</span> Submit New Project Selection to Founder for Sign-off
+          </div>
+          <form id="mgrSubmitSelectionForm">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">PROJECT / CLIENT NAME</label>
+                <input type="text" id="selProjectName" required placeholder="e.g. Vesu 4BHK Luxury Villa" style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">SELECTION CATEGORY</label>
+                <select id="selCategory" required style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A;">
+                  <option value="Italian Marble &amp; Flooring">Italian Marble &amp; Flooring</option>
+                  <option value="Veneer &amp; Woodwork Selection">Veneer &amp; Woodwork Selection</option>
+                  <option value="Sanitaryware &amp; Bath Fixtures">Sanitaryware &amp; Bath Fixtures</option>
+                  <option value="Exterior Elevation &amp; Glazing Palette">Exterior Elevation &amp; Glazing Palette</option>
+                  <option value="Custom Furniture, Upholstery &amp; Fabric">Custom Furniture, Upholstery &amp; Fabric</option>
+                  <option value="Architectural Lighting &amp; Automation">Architectural Lighting &amp; Automation</option>
+                  <option value="Landscape, Pool &amp; Hardscape Spec">Landscape, Pool &amp; Hardscape Spec</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">ASSIGN TO FOUNDER</label>
+                <select id="selTargetFounder" required style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A;">
+                  <option value="Nilesh (Founder)">Nilesh (Founder)</option>
+                  <option value="Gaurav (Founder)">Gaurav (Founder)</option>
+                  <option value="Both Founders (Executive Sign-off)">Both Founders (Executive Sign-off)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">DECISION PRIORITY</label>
+                <select id="selUrgency" style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A;">
+                  <option value="Urgent">🚨 Urgent (Project Timeline Critical)</option>
+                  <option value="High" selected>⚡ High Priority</option>
+                  <option value="Standard">Standard Review</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">PROPOSED MATERIAL &amp; DESIGN SPECIFICATION DETAILS</label>
+                <textarea id="selSpecsDetails" required rows="2" placeholder="Detail proposed material shade, vendor, thickness, finish, sample code, and layout notes..." style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A; resize: vertical;"></textarea>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 5px;">ATTACH SAMPLE / SPEC DOSSIER</label>
+                <input type="text" id="selAttachmentName" placeholder="e.g. Botticino_Marble_Dossier_v1.pdf" style="width: 100%; padding: 9px 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; background: #FFFFFF; color: #0F172A;">
+                <div style="font-size: 0.74rem; color: #64748B; margin-top: 4px;">Sample specs &amp; 3D finish dossier attached</div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button type="submit" style="background: linear-gradient(135deg, #8A6836 0%, #B89255 100%); color: #FFFFFF; border: none; padding: 11px 24px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(138, 104, 54, 0.25);">
+                <span>💎</span> Submit Selection to Founder for Approval
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Selections Register Table -->
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 160px;">REF &amp; PROJECT</th>
+                <th style="width: 190px;">SELECTION CATEGORY</th>
+                <th>PROPOSED SPECIFICATION &amp; ATTACHMENT</th>
+                <th style="width: 150px;">TARGET FOUNDER</th>
+                <th style="width: 170px;">APPROVAL STATUS</th>
+                <th style="width: 200px;">FOUNDER SIGN-OFF &amp; ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="mgrSelectionsTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2: 📤 MANAGER WORK SUBMISSION TO FOUNDER
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrSubmissionPanel">
+        <div class="wf-card-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="icon-user-badge">📤</span>
+            <h2 style="color: #0284C7;">MANAGER WORK SUBMISSION &amp; BLUEPRINT APPROVAL TO FOUNDER</h2>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; background-color: #1A2436; border: 1px solid #283750; border-radius: 14px; padding: 20px;">
+          <div>
+            <div class="bar-group" style="margin-bottom: 14px;">
+              <label style="color: #CBD5E1; font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 6px;">SELECT PROJECT TASK TO SUBMIT</label>
+              <select id="mgrSubmitTaskSelector" class="bar-select" style="width: 100%; padding: 10px; font-size: 0.88rem; background-color: #0F172A; border-color: #334155; color: #FFFFFF;">
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="bar-group">
+              <label style="color: #CBD5E1; font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 6px;">EXECUTIVE HEAD DESIGNER REPORT / PROJECT NOTES</label>
+              <textarea id="mgrSubmitDescInput" rows="5" class="form-control" style="background-color: #0F172A; border: 1px solid #334155; color: #F8FAFC; border-radius: 8px; padding: 12px; width: 100%; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5;" placeholder="Enter finalized structural sign-off, spatial verification notes, or cost estimates..."></textarea>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-sans); font-size: 0.9rem; font-weight: 700; color: #FFFFFF; margin: 0;">Attached Master Files</h3>
+                <span style="font-size: 0.78rem; color: #38BDF8;">Auto-packaged for Founder Review</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                <div class="emp-upload-box has-file" style="padding: 12px 8px;">
+                  <div style="font-size: 0.74rem; color: #E2E8F0; font-weight: 700;">📐 CAD Blueprint Package</div>
+                  <div style="font-size: 0.74rem; color: #38BDF8; margin-top: 4px; font-weight: 600;">Executive_Master_Draft.dwg</div>
+                  <div style="font-size: 0.68rem; color: #10B981;">Ready (22.5 MB)</div>
+                </div>
+                <div class="emp-upload-box has-file" style="padding: 12px 8px;">
+                  <div style="font-size: 0.74rem; color: #E2E8F0; font-weight: 700;">📄 Structural Audit Dossier</div>
+                  <div style="font-size: 0.74rem; color: #38BDF8; margin-top: 4px; font-weight: 600;">Site_Approval_Signoff.pdf</div>
+                  <div style="font-size: 0.68rem; color: #10B981;">Ready (3.8 MB)</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button id="btnMgrSubmitWork" type="button" class="btn-emp-action btn-emp-submit" style="background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);">
+                <span>🚀</span> SUBMIT FOR FOUNDER APPROVAL
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3: 📋 SUB DESIGNER SUBMISSIONS WAITING FOR CHECK & APPROVAL
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrEmployeeCheckSection">
+        <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="icon-user-badge">📋</span>
+            <h2>SUB DESIGNER SUBMISSIONS WAITING FOR CHECK &amp; APPROVAL</h2>
+          </div>
+          <span class="badge-pending-bookings" id="badgeAwaitingCheck">Waiting: 0</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 170px;">SUBMISSION REF &amp; DATE</th>
+                <th style="width: 160px;">EMPLOYEE</th>
+                <th>SUBMITTED TASK &amp; WORK NOTES</th>
+                <th style="width: 180px;">ATTACHED FILES</th>
+                <th style="width: 140px;">REVIEW STATUS</th>
+                <th style="width: 180px;">HEAD DESIGNER ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="mgrCheckQueueTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4: 📌 ASSIGN & MANAGE TEAM EMPLOYEE TASKS
+           ============================================================ -->
+      <section class="wf-card-panel" id="mgrTeamTaskSection">
+        <div class="wf-card-header">
+          <h2>TEAM TASK DELEGATION &amp; REGISTER (MANAGER → EMPLOYEES)</h2>
+        </div>
+
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 120px;">PRIORITY</th>
+                <th style="width: 130px;">CITY</th>
+                <th>TASK DETAILS</th>
+                <th style="width: 150px;">ASSIGNED TO</th>
+                <th style="width: 180px;">SUBMISSION DEADLINE</th>
+                <th style="width: 140px;">STATUS</th>
+                <th style="width: 160px;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="mgrTasksTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Quick Assign Task Bar -->
+        <div class="task-register-header" style="margin-top: 14px;">
+          <h3>📌 Assign Task to Sub Designer</h3>
+        </div>
+        <form class="task-assign-bar" id="mgrQuickAssignForm">
+          <div class="bar-group">
+            <label>PRIORITY</label>
+            <select id="mgrQuickPrioritySelect" class="bar-select" style="font-weight: 700;">
+              <option value="Urgent">🚨 Urgent</option>
+              <option value="Standard" selected>⚡ Standard</option>
+            </select>
+          </div>
+
+          <div class="bar-group">
+            <label>ASSIGN TO</label>
+            <select id="mgrQuickEmpSelect" class="bar-select" required>
+              <!-- Employees populated via JS -->
+            </select>
+          </div>
+
+          <div class="bar-group">
+            <label>DISCIPLINE</label>
+            <select id="mgrQuickDisciplineSelect" class="bar-select" style="font-weight: 700;">
+              <option value="Architecture" selected>🏛️ Architecture</option>
+              <option value="Interior">🛋️ Interior</option>
+            </select>
+          </div>
+
+          <div class="bar-group">
+            <label>CITY</label>
+            <select id="mgrQuickCitySelect" class="bar-select">
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Surat">Surat</option>
+              <option value="Vadodara">Vadodara</option>
+              <option value="Rajkot">Rajkot</option>
+              <option value="Bhavnagar">Bhavnagar</option>
+              <option value="Jamnagar">Jamnagar</option>
+              <option value="Gandhinagar">Gandhinagar</option>
+              <option value="Junagadh">Junagadh</option>
+            </select>
+          </div>
+
+          <div class="bar-group bar-flex-grow">
+            <label>WORK DESCRIPTION</label>
+            <input type="text" id="mgrQuickDescInput" class="bar-input" placeholder="On-site technical drawing check for Commercial Hub..." required>
+          </div>
+
+          <div class="bar-group">
+            <label>DEADLINE</label>
+            <input type="date" id="mgrQuickDeadlineInput" class="bar-input" style="padding: 7px 10px;" required>
+          </div>
+
+          <div class="bar-group">
+            <label>STATUS</label>
+            <select id="mgrQuickStatusSelect" class="bar-select">
+              <option value="Ongoing">Ongoing</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-assign-task">+ Assign Task</button>
+        </form>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5: 📍 GLOBAL WORK OVERVIEW BY CITY
+           ============================================================ -->
+      <section class="wf-card-panel">
+        <div class="wf-card-header">
+          <span class="icon-location-pin">📍</span>
+          <h2>REGIONAL FIELD WORKFORCE OVERVIEW (<span id="mgrCityRegisterLabel">Ahmedabad</span>)</h2>
+        </div>
+
+        <div class="city-tabs" id="mgrCityTabs">
+          <button class="city-tab active" data-city="Ahmedabad">Ahmedabad</button>
+          <button class="city-tab" data-city="Surat">Surat</button>
+          <button class="city-tab" data-city="Vadodara">Vadodara</button>
+          <button class="city-tab" data-city="Rajkot">Rajkot</button>
+          <button class="city-tab" data-city="Bhavnagar">Bhavnagar</button>
+          <button class="city-tab" data-city="Jamnagar">Jamnagar</button>
+          <button class="city-tab" data-city="Gandhinagar">Gandhinagar</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">S.NO</th>
+                <th style="width: 180px;">EMPLOYEE NAME</th>
+                <th style="width: 120px;">ROLE CODE</th>
+                <th>WORK DETAILS / FIELD OPERATIONS</th>
+                <th style="width: 160px;">STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="mgrCityEmpTable">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ========== SWITCH HEAD DESIGNER PASSWORD MODAL ========== -->
+  <div class="switch-modal-overlay" id="switchMgrOverlay">
+    <div class="switch-modal-card">
+      <div class="switch-modal-icon">🔐</div>
+      <h3>Switch Head Designer Account</h3>
+      <p class="switch-subtitle">Enter password to switch to another manager's workspace.</p>
+
+      <form id="switchMgrForm">
+        <div class="form-group" style="text-align: left; margin-bottom: 12px;">
+          <label class="plaque-label" style="color: #64748B;">SELECT HEAD DESIGNER</label>
+          <select id="switchMgrSelect" class="bar-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1A2436; color: #F9FAFB;">
+            <!-- Populated via JS (only managers) -->
+          </select>
+        </div>
+
+        <div class="form-group" style="text-align: left; margin-bottom: 8px;">
+          <label class="plaque-label" style="color: #64748B;">ENTER ACCESS PASSWORD</label>
+          <input type="password" id="switchMgrPassword" class="switch-password-input" placeholder="••••••••" required>
+        </div>
+
+        <div class="switch-error-msg" id="switchMgrError"></div>
+
+        <div class="switch-modal-actions">
+          <button type="submit" class="btn-switch-confirm">Switch Account</button>
+          <button type="button" class="btn-switch-cancel" id="cancelSwitchMgr">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== EDIT / REMOVE ASSIGNED TASK MODAL (MANAGER ONLY) ========== -->
+  <div class="modal-backdrop" id="editTaskModal">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3 style="color: #FFFFFF; display: flex; align-items: center; gap: 8px;">
+          <span>✏️</span> EDIT / REMOVE ASSIGNED TASK
+        </h3>
+        <button class="modal-close" id="closeEditTaskModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editTaskForm">
+          <input type="hidden" id="editTaskId">
+          <input type="hidden" id="editTaskType" value="mgrTask">
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">ASSIGNED EMPLOYEE</label>
+              <select id="editTaskAssigneeSelect" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;" required>
+                <!-- Employees populated via JS -->
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">TASK PRIORITY</label>
+              <select id="editTaskPriority" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Urgent">🚨 Urgent</option>
+                <option value="Standard">⚡ Standard</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">CITY BRANCH</label>
+            <select id="editTaskCity" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Surat">Surat</option>
+              <option value="Vadodara">Vadodara</option>
+              <option value="Rajkot">Rajkot</option>
+              <option value="Bhavnagar">Bhavnagar</option>
+              <option value="Jamnagar">Jamnagar</option>
+              <option value="Gandhinagar">Gandhinagar</option>
+              <option value="Junagadh">Junagadh</option>
+              <option value="Anand">Anand</option>
+              <option value="Navsari">Navsari</option>
+              <option value="Morbi">Morbi</option>
+              <option value="Bharuch">Bharuch</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">WORK DESCRIPTION / TASK TITLE</label>
+            <textarea id="editTaskDesc" class="form-control" rows="3" style="background-color: #0F172A; border: 1px solid #334155; color: #F8FAFC; border-radius: 8px; padding: 12px; width: 100%; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5;" required></textarea>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">CAD SPECIFICATION FILE (OPTIONAL)</label>
+            <input type="text" id="editTaskCadFile" class="bar-input" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;" placeholder="e.g. Architectural_Elevation_Draft.dwg">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SUBMISSION DEADLINE</label>
+              <input type="date" id="editTaskDeadline" class="bar-input" style="width: 100%; padding: 8px 10px; background: #0F172A; color: #FFFFFF; border-color: #334155;" required>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">STATUS</label>
+              <select id="editTaskStatus" class="bar-select" style="width: 100%; padding: 9px 10px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Ongoing">Ongoing</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; border-top: 1px solid #283750; padding-top: 16px;">
+            <button type="button" class="btn-task-delete" id="btnDeleteTask" title="Delete this task completely">
+              <span>🗑️</span> Remove Task
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn-switch-cancel" id="cancelEditTask">Cancel</button>
+              <button type="submit" class="btn-switch-confirm" style="background: #0284C7; border-color: #0284C7;">💾 Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

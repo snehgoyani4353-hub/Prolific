@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROLIFIC | Founder Control Center &amp; Workforce Portal</title>
+  <meta name="description" content="Prolific Founder Control Center - Enterprise Architecture and Luxury Interior Design Governance System.">
+  <link rel="icon" type="image/png" href="images/logo-dark.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="wf-portal-body">
+
+  <!-- TOP APP BAR -->
+  <header class="wf-header">
+    <div class="wf-header-left">
+      <a href="index.html" class="wf-logo-link" title="Prolific Home">
+        <img src="images/logo-dark.png" alt="PROLIFIC" class="wf-header-logo-img">
+      </a>
+      <div class="wf-brand-info">
+        <span class="wf-portal-pill">FOUNDER CONTROL CENTER</span>
+        <span class="wf-engine-subtext">Enterprise Workforce &amp; Operational Governance</span>
+      </div>
+    </div>
+
+    <div class="wf-header-right">
+      <a href="login.html" class="btn-back-login" title="Return to Secure Login Portal">← Back to Login</a>
+      <button class="btn-switch-mgr-header" id="openSwitchFounderModal">Switch Founder</button>
+      <a href="index.html" class="btn-global-exit" title="Exit to Public Website">Exit to Website</a>
+      <div class="user-profile-badge" id="founderProfileBadge">
+        <label for="founderAvatarInput" class="user-avatar-upload-label" title="Click circular photo to add/change profile photo">
+          <input type="file" id="founderAvatarInput" accept="image/*" style="display: none;">
+          <div class="user-avatar-circle" id="founderAvatarCircle">
+            <img src="" id="founderAvatarImg" class="user-avatar-img" alt="Founder Photo" style="display: none;">
+            <span class="user-avatar-initials" id="founderAvatarInitials">G</span>
+            <span class="avatar-camera-icon" title="Add / Change Photo">📷</span>
+          </div>
+        </label>
+        <span id="headerUserName">Gaurav (FOUNDER)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE LAYOUT WITH DUAL INDEPENDENT SCROLLERS -->
+  <div class="wf-workspace-layout">
+
+    <!-- LEFT SIDEBAR: PERSONNEL ROSTER (SCROLLER 1) -->
+    <aside class="wf-sidebar">
+      <div class="sidebar-title">
+        <span>Personnel Roster</span>
+      </div>
+
+      <!-- Category: Founders (Head) -->
+      <div class="personnel-category">
+        <div class="cat-header">
+          <span>Founders (Head)</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="sidebarFounderList">
+          <li class="person-item active" data-role="founder" data-name="Gaurav" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">G</span>
+            <div class="person-meta">
+              <span class="name">Gaurav (Head)</span>
+            </div>
+          </li>
+          <li class="person-item" data-role="founder" data-name="Nilesh" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">N</span>
+            <div class="person-meta">
+              <span class="name">Nilesh (Head)</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Category: Head Designers -->
+      <div class="personnel-category">
+        <div class="cat-header">
+          <span>Head Designers (6)</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="sidebarManagerList">
+          <li class="person-item active" data-manager="Shashikant Bhai" style="cursor: pointer;" title="Open Shashikant Bhai Manager Dashboard in Founder Profile">
+            <span class="avatar-badge pink-badge">SK</span>
+            <div class="person-meta">
+              <span class="name">Shashikant Bhai (MGR001)</span>
+            </div>
+          </li>
+          <li class="person-item" data-manager="Hardik" style="cursor: pointer;" title="Open Hardik Manager Dashboard in Founder Profile">
+            <span class="avatar-badge pink-badge">H</span>
+            <div class="person-meta">
+              <span class="name">Hardik (MGR002)</span>
+            </div>
+          </li>
+          <li class="person-item" data-manager="Shivang" style="cursor: pointer;" title="Open Shivang Manager Dashboard in Founder Profile">
+            <span class="avatar-badge blue-badge">S</span>
+            <div class="person-meta">
+              <span class="name">Shivang (MGR003)</span>
+            </div>
+          </li>
+          <li class="person-item" data-manager="Sunita" style="cursor: pointer;" title="Open Sunita Manager Dashboard in Founder Profile">
+            <span class="avatar-badge purple-badge">SN</span>
+            <div class="person-meta">
+              <span class="name">Sunita (MGR004)</span>
+            </div>
+          </li>
+          <li class="person-item" data-manager="Helly" style="cursor: pointer;" title="Open Helly Manager Dashboard in Founder Profile">
+            <span class="avatar-badge yellow-badge">HL</span>
+            <div class="person-meta">
+              <span class="name">Helly (MGR005)</span>
+            </div>
+          </li>
+          <li class="person-item" data-manager="Harshita" style="cursor: pointer;" title="Open Harshita Manager Dashboard in Founder Profile">
+            <span class="avatar-badge pink-badge">HS</span>
+            <div class="person-meta">
+              <span class="name">Harshita (MGR006)</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Category: Direct Workforce Personnel (17) -->
+      <div class="personnel-category" style="margin-top: 18px;">
+        <div class="cat-header">
+          <span>Direct Workforce Personnel (17)</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="sidebarFounderEmpList">
+          <!-- Populated dynamically via JS -->
+        </ul>
+      </div>
+
+      <!-- Category: Regional City Branches (12) -->
+      <div class="personnel-category" style="margin-top: 18px;">
+        <div class="cat-header">
+          <span>Regional City Branches (12)</span>
+          <span class="arrow">▼</span>
+        </div>
+        <ul class="personnel-list" id="sidebarCityList">
+          <li class="person-item active" data-city="Ahmedabad" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">AH</span>
+            <div class="person-meta"><span class="name">Ahmedabad (Head Office)</span></div>
+          </li>
+          <li class="person-item" data-city="Surat" style="cursor: pointer;">
+            <span class="avatar-badge pink-badge">SU</span>
+            <div class="person-meta"><span class="name">Surat Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Vadodara" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">VA</span>
+            <div class="person-meta"><span class="name">Vadodara Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Rajkot" style="cursor: pointer;">
+            <span class="avatar-badge purple-badge">RA</span>
+            <div class="person-meta"><span class="name">Rajkot Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Bhavnagar" style="cursor: pointer;">
+            <span class="avatar-badge yellow-badge">BH</span>
+            <div class="person-meta"><span class="name">Bhavnagar Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Jamnagar" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">JA</span>
+            <div class="person-meta"><span class="name">Jamnagar Branch</span></div>
+          </li>
+          <li class="person-item" data-city="Gandhinagar" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">GA</span>
+            <div class="person-meta"><span class="name">Gandhinagar Branch</span></div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT AREA (SCROLLER 2) -->
+    <main class="wf-main-content">
+
+      <!-- FOUNDER OPERATIONAL WORKSPACE TABS (5 STREAMLINED TABS) -->
+      <div class="wf-portal-tabs" id="founderPortalTabs">
+        <button class="wf-tab-btn active" data-tab="tabManagers">
+          Head Designers (6)
+        </button>
+        <button class="wf-tab-btn" data-tab="tabEmployees">
+          Workforce Employees (17)
+        </button>
+        <button class="wf-tab-btn" data-tab="tabAppointments">
+          Client Appointments <span class="wf-tab-badge" id="tabBadgeAppt">0</span>
+        </button>
+        <button class="wf-tab-btn" data-tab="tabSelections">
+          Design &amp; Material Selections <span class="wf-tab-badge" id="tabBadgeSelections" style="background:#D97706;">0</span>
+        </button>
+        <button class="wf-tab-btn" data-tab="tabOngoingProjects">
+          Ongoing Projects <span class="wf-tab-badge" id="tabBadgeOngoing" style="background:#0284C7; color:#FFFFFF;">8</span>
+        </button>
+        <button class="wf-tab-btn" data-tab="tabProposals">
+          Proposals <span class="wf-tab-badge" id="tabBadgeProposals" style="background:#7C3AED; color:#FFFFFF;">6</span>
+        </button>
+        <button class="wf-tab-btn" data-tab="tabRegionalHubs">
+          Regional Branch Hubs (8)
+        </button>
+      </div>
+
+      <!-- GLOBAL EXECUTIVE APPOINTMENT ALERT BANNER -->
+      <div id="founderGlobalApptAlert" style="display: none; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 2px solid #F59E0B; border-radius: 14px; padding: 16px 20px; margin-bottom: 22px; box-shadow: 0 6px 22px rgba(245, 158, 11, 0.2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="font-size: 2rem; animation: pulse 1.5s infinite;">🚨</span>
+          <div>
+            <div style="font-weight: 800; color: #92400E; font-size: 1rem; letter-spacing: 0.02em;">
+              NEW CLIENT CONSULTATION APPOINTMENT RECEIVED!
+            </div>
+            <div id="founderGlobalAlertDetails" style="font-size: 0.86rem; color: #B45309; margin-top: 3px;">
+              A client has requested a private consultation session. Review project scope and schedule/delegate to a Head Designer below.
+            </div>
+          </div>
+        </div>
+        <button type="button" id="btnGoToAppointmentsTab" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%); color: #FFFFFF; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 0.88rem; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);">
+          ⚡ View &amp; Delegate Meeting →
+        </button>
+      </div>
+
+      <!-- ============================================================
+           TAB 1: SUB HEAD MANAGER OPERATIONS & LIVE WORKSPACE
+           ============================================================ -->
+      <div class="wf-tab-content-panel active" id="tabManagers">
+        <section class="wf-card-panel">
+          <!-- Active Manager Title Header -->
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="avatar-badge pink-badge" style="font-size: 0.95rem; width: 44px; height: 44px; font-weight: 800;">HD</span>
+              <div>
+                <h2 style="margin: 0; font-size: 1.25rem; color: #1E2532;">
+                  <span id="founderActiveMgrTitle">Shashikant Bhai (MGR001)</span>
+                </h2>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                  Role: <strong id="founderActiveMgrRole" style="color: #8A6836;">Drawing &amp; Field Supervision</strong> • <span id="founderActiveMgrCityBadge" style="color: #0369A1; font-weight: 700;">📍 Ahmedabad Central Hub</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <button class="btn-assign-task" id="btnOpenAssignMgrModal" style="padding: 10px 20px; font-size: 0.86rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                <span>➕</span> Assign Task to Head Designer
+              </button>
+            </div>
+          </div>
+
+          <!-- Managers Horizontal Selector Cards -->
+          <div class="managers-avatar-carousel" id="founderManagerCarousel">
+            <div class="mgr-card active" data-mgr="Shashikant Bhai">
+              <div class="mgr-avatar pink-glow"><span class="avatar-initials">SK</span></div>
+              <div class="mgr-name">Shashikant Bhai</div>
+              <div class="mgr-subcode">MGR001 • Sub (Head)</div>
+            </div>
+            <div class="mgr-card" data-mgr="Hardik">
+              <div class="mgr-avatar pink-glow"><span class="avatar-initials">H</span></div>
+              <div class="mgr-name">Hardik</div>
+              <div class="mgr-subcode">MGR002 • Sub (Head)</div>
+            </div>
+            <div class="mgr-card" data-mgr="Shivang">
+              <div class="mgr-avatar blue-glow"><span class="avatar-initials">S</span></div>
+              <div class="mgr-name">Shivang</div>
+              <div class="mgr-subcode">MGR003 • Sub (Head)</div>
+            </div>
+            <div class="mgr-card" data-mgr="Sunita">
+              <div class="mgr-avatar purple-glow"><span class="avatar-initials">SN</span></div>
+              <div class="mgr-name">Sunita</div>
+              <div class="mgr-subcode">MGR004 • Sub (Head)</div>
+            </div>
+            <div class="mgr-card" data-mgr="Helly">
+              <div class="mgr-avatar yellow-glow"><span class="avatar-initials">HL</span></div>
+              <div class="mgr-name">Helly</div>
+              <div class="mgr-subcode">MGR005 • Sub (Head)</div>
+            </div>
+            <div class="mgr-card" data-mgr="Harshita">
+              <div class="mgr-avatar pink-glow"><span class="avatar-initials">HS</span></div>
+              <div class="mgr-name">Harshita</div>
+              <div class="mgr-subcode">MGR006 • Sub (Head)</div>
+            </div>
+          </div>
+
+          <!-- MODULE 1: Dispatched Tasks from Founder to this Manager -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
+            <h3>1. Active Tasks Dispatched to <span id="dispatchHeading">Shashikant Bhai</span></h3>
+            <span style="font-size: 0.82rem; color: #94A3B8;">🚨 Urgent tasks prioritized at top</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 120px;">PRIORITY</th>
+                  <th style="width: 130px;">CITY</th>
+                  <th>TASK &amp; SPECIFICATION DETAILS</th>
+                  <th style="width: 160px;">ASSIGNED BY</th>
+                  <th style="width: 180px;">SUBMISSION DEADLINE</th>
+                  <th style="width: 140px;">STATUS</th>
+                  <th style="width: 160px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="dispatchedTasksTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MODULE 2: Sub Designer Submissions Queue for this Manager -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h3 style="color: #0369A1;">2. Sub Designer Submissions Awaiting Approval under <span id="mgrCheckQueueHeading">Shashikant Bhai</span></h3>
+            </div>
+            <span class="badge-pending-bookings" id="founderBadgeAwaitingCheck">Waiting: 0</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 170px;">SUBMISSION REF &amp; DATE</th>
+                  <th style="width: 160px;">EMPLOYEE</th>
+                  <th>SUBMITTED WORK NOTES &amp; DRAWINGS</th>
+                  <th style="width: 180px;">ATTACHED FILES</th>
+                  <th style="width: 140px;">CHECK STATUS</th>
+                  <th style="width: 180px;">FOUNDER / HEAD DESIGNER ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="founderMgrCheckQueueTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MODULE 3: Assign Task to MANAGER (Inline Executive Bar) -->
+          <div class="task-register-header" style="margin-top: 28px; border-top: 1.5px solid #EFE8DA; padding-top: 20px;">
+            <h3 style="color: #8A6836; display: flex; align-items: center; gap: 8px;">
+              <span>📌</span> 3. Assign New Operational Task to Manager
+            </h3>
+          </div>
+          <form class="task-assign-bar" id="assignTaskForm">
+            <div class="bar-group">
+              <label>PRIORITY</label>
+              <select id="assignPrioritySelect" class="bar-select" style="font-weight: 700;">
+                <option value="Urgent">🚨 Urgent</option>
+                <option value="Standard" selected>⚡ Standard</option>
+              </select>
+            </div>
+
+            <div class="bar-group">
+              <label>MANAGER</label>
+              <select id="assignManagerSelect" class="bar-select" style="font-weight: 700;">
+                <option value="Shashikant Bhai">Shashikant Bhai</option>
+                <option value="Hardik">Hardik</option>
+                <option value="Shivang">Shivang</option>
+                <option value="Sunita">Sunita</option>
+                <option value="Helly">Helly</option>
+                <option value="Harshita">Harshita</option>
+              </select>
+            </div>
+
+            <div class="bar-group">
+              <label>DISCIPLINE</label>
+              <select id="assignDisciplineSelect" class="bar-select" style="font-weight: 700;">
+                <option value="Architecture" selected>🏛️ Architecture</option>
+                <option value="Interior">🛋️ Interior</option>
+              </select>
+            </div>
+
+            <div class="bar-group">
+              <label>CITY</label>
+              <select id="assignCitySelect" class="bar-select">
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+              </select>
+            </div>
+
+            <div class="bar-group bar-flex-grow">
+              <label>WORK DESCRIPTION</label>
+              <input type="text" id="assignDescInput" class="bar-input" placeholder="Drawing check for Commercial Hub..." required>
+            </div>
+
+            <div class="bar-group">
+              <label>DEADLINE</label>
+              <input type="date" id="assignDeadlineInput" class="bar-input" style="padding: 7px 10px;" required>
+            </div>
+
+            <div class="bar-group">
+              <label>STATUS</label>
+              <select id="assignStatusSelect" class="bar-select">
+                <option value="Ongoing">Ongoing</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-assign-task">+ Assign Task to Head Designer</button>
+          </form>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 2: DIRECT SUB DESIGNER OPERATIONS & LIVE WORKSPACE
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabEmployees">
+        <section class="wf-card-panel">
+          <!-- Active Employee Title Header -->
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="avatar-badge blue-badge" style="font-size: 0.95rem; width: 44px; height: 44px; font-weight: 800;">SD</span>
+              <div>
+                <h2 style="margin: 0; font-size: 1.25rem; color: #1E2532;">
+                  <span id="founderActiveEmpTitle">Komal (EMP012)</span>
+                </h2>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                  Specialization: <strong id="founderActiveEmpWork" style="color: #0369A1;">Drawing Specialist</strong> • Supervised by: <strong id="founderActiveEmpMgr" style="color: #8A6836;">Shashikant Bhai</strong> • <span id="founderActiveEmpCityBadge" style="color: #047857; font-weight: 700;">📍 Ahmedabad Hub</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <button class="btn-assign-task" id="btnOpenAssignEmpModal" style="background-color: #047857; border-color: #059669; padding: 10px 20px; font-size: 0.86rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                <span>➕</span> Assign Task Directly
+              </button>
+            </div>
+          </div>
+
+          <!-- Employee Horizontal Selector Carousel (17 Employees) -->
+          <div class="managers-avatar-carousel" id="founderEmployeeCarousel" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
+            <!-- Populated dynamically via JS with all 17 employees -->
+          </div>
+
+          <!-- MODULE 1: Urgent Action Tasks for this Employee -->
+          <div id="founderEmpUrgentWrapper">
+            <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+              <h3 style="color: #DC2626;">1. Urgent Action Tasks Assigned to <span id="founderEmpUrgentHeading">Komal</span></h3>
+              <span class="luxury-priority-badge urgent">URGENT ACTION</span>
+            </div>
+            <div id="founderEmpUrgentContainer" class="urgent-grid-cards" style="margin-bottom: 24px;">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- MODULE 2: Active Assigned Tasks for this Employee -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <h3>2. Active Tasks Assigned to <span id="founderEmpActiveHeading">Komal</span></h3>
+            <span style="font-size: 0.82rem; color: #64748B;">Workspace task details</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 120px;">PRIORITY</th>
+                  <th style="width: 130px;">CITY</th>
+                  <th>TASK &amp; DRAWING SPECIFICATION</th>
+                  <th style="width: 160px;">ASSIGNED BY</th>
+                  <th style="width: 180px;">SUBMISSION DEADLINE</th>
+                  <th style="width: 140px;">STATUS</th>
+                  <th style="width: 160px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="founderEmpActiveTasksTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MODULE 3: Work Submissions & Uploaded Drawings by this Employee -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+            <h3 style="color: #047857;">3. Work Submissions &amp; Uploaded Drawings by <span id="founderEmpSubmissionsHeading">Komal</span></h3>
+            <span style="font-size: 0.82rem; color: #64748B;">Live submissions register</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 170px;">SUBMISSION REF &amp; DATE</th>
+                  <th>PROJECT TASK TITLE &amp; DESCRIPTION</th>
+                  <th style="width: 160px;">SUPERVISOR</th>
+                  <th style="width: 180px;">ATTACHED FILES</th>
+                  <th style="width: 140px;">REVIEW STATUS</th>
+                  <th style="width: 160px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="founderEmpSubmissionsTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MODULE 4: Direct Sub Designer Assignment Form Panel (Founder Override) -->
+          <div style="background: #FAF7F2; border: 1.5px solid #047857; border-radius: 14px; padding: 22px; margin-top: 28px; box-shadow: 0 4px 18px rgba(4, 120, 87, 0.1);">
+            <div class="task-register-header" style="margin-bottom: 14px; border-bottom: 1.5px solid #DFD5C2; padding-bottom: 10px;">
+              <h3 style="color: #047857; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin: 0;">
+                <span>✨</span> 4. ASSIGN TASK DIRECTLY TO <span id="assignToEmpNameLabel">KOMAL</span> (FOUNDER OVERRIDE)
+              </h3>
+            </div>
+
+            <form class="task-assign-bar" id="assignDirectEmpForm" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; background: transparent; padding: 0; border: none;">
+              <div class="bar-group" style="min-width: 120px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">PRIORITY</label>
+                <select id="assignDirectPrioritySelect" class="bar-select" style="font-weight: 700; width: 100%;">
+                  <option value="Urgent">🚨 Urgent</option>
+                  <option value="Standard" selected>⚡ Standard</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 180px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">SELECT SUB DESIGNER</label>
+                <select id="directEmpSelect" class="bar-select" style="width: 100%; font-weight: 700;" required>
+                  <!-- Populated via JS with all employees -->
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 140px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">DISCIPLINE</label>
+                <select id="assignDirectDisciplineSelect" class="bar-select" style="font-weight: 700; width: 100%;">
+                  <option value="Architecture" selected>🏛️ Architecture</option>
+                  <option value="Interior">🛋️ Interior</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 130px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">BRANCH CITY</label>
+                <select id="directCitySelect" class="bar-select" style="width: 100%;">
+                  <option value="Ahmedabad">Ahmedabad</option>
+                  <option value="Surat">Surat</option>
+                  <option value="Vadodara">Vadodara</option>
+                  <option value="Rajkot">Rajkot</option>
+                  <option value="Bhavnagar">Bhavnagar</option>
+                  <option value="Jamnagar">Jamnagar</option>
+                  <option value="Gandhinagar">Gandhinagar</option>
+                  <option value="Junagadh">Junagadh</option>
+                </select>
+              </div>
+
+              <div class="bar-group bar-flex-grow" style="min-width: 220px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">TASK WORK DESCRIPTION</label>
+                <input type="text" id="directDescInput" class="bar-input" placeholder="Enter full drawing / execution specifications..." style="width: 100%;" required>
+              </div>
+
+              <div class="bar-group" style="min-width: 140px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">DEADLINE</label>
+                <input type="date" id="directDeadlineInput" class="bar-input" style="padding: 7px 10px; width: 100%;" required>
+              </div>
+
+              <div class="bar-group" style="min-width: 120px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">STATUS</label>
+                <select id="directStatusSelect" class="bar-select" style="width: 100%;">
+                  <option value="Ongoing">Ongoing</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-assign-task" style="background-color: #047857; border-color: #059669; padding: 12px 24px; font-weight: 800; font-size: 0.92rem; box-shadow: 0 4px 14px rgba(4, 120, 87, 0.4);">
+                + Assign Task Directly to Employee
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 3: CLIENT CONSULTATIONS & APPOINTMENTS (ONLINE BOOKINGS)
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabAppointments">
+        <section class="wf-card-panel" id="appointmentsSection">
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="icon-user-badge">📅</span>
+              <h2>CLIENT CONSULTATION &amp; APPOINTMENT BOOKINGS</h2>
+            </div>
+            <div class="appointment-stats-badges" style="display: flex; gap: 8px;">
+              <span class="badge-total-bookings" id="badgeTotalBookings">Total: 0</span>
+              <span class="badge-pending-bookings" id="badgePendingBookings">Pending: 0</span>
+              <span class="badge-confirmed-bookings" id="badgeConfirmedBookings">Active: 0</span>
+            </div>
+          </div>
+
+          <!-- MODULE 1: FOUNDER EXECUTIVE DELEGATION & MEETING SCHEDULER -->
+          <div style="background: #FAF7F2; border: 1.5px solid #C5A880; border-radius: 14px; padding: 22px; margin-bottom: 24px; box-shadow: 0 4px 18px rgba(197, 168, 128, 0.15);">
+            <div class="task-register-header" style="margin-bottom: 14px; border-bottom: 1.5px solid #DFD5C2; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <h3 style="color: #8A6836; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin: 0;">
+                <span>🤝</span> 1. DELEGATE &amp; SCHEDULE CLIENT MEETING TO HEAD DESIGNER
+              </h3>
+              <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">(Founder can reassign meeting if unavailable)</span>
+            </div>
+
+            <form class="task-assign-bar" id="delegateApptForm" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; background: transparent; padding: 0; border: none;">
+              <div class="bar-group" style="min-width: 240px; flex: 1.2;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">SELECT CLIENT APPOINTMENT</label>
+                <select id="delegateApptSelect" class="bar-select" style="width: 100%; font-weight: 700;" required>
+                  <option value="" disabled selected>-- Select Client Appointment --</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 200px; flex: 1;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">ASSIGN / DELEGATE TO HEAD DESIGNER</label>
+                <select id="delegateManagerSelect" class="bar-select" style="width: 100%; font-weight: 700;" required>
+                  <option value="Shashikant Bhai" data-code="HD001">Shashikant Bhai (HD001 - Both)</option>
+                  <option value="Hardik" data-code="HD002">Hardik (HD002 - Nilesh)</option>
+                  <option value="Shivang" data-code="HD003">Shivang (HD003 - Gaurav)</option>
+                  <option value="Sunita" data-code="HD004">Sunita (HD004 - Gaurav)</option>
+                  <option value="Pooja" data-code="HD005">Pooja (HD005 - Nilesh)</option>
+                  <option value="Jitendra Bhai" data-code="HD006">Jitendra Bhai (HD006 - Both)</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 160px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">DELEGATING FOUNDER</label>
+                <select id="delegatingFounderSelect" class="bar-select" style="width: 100%; font-weight: 700;">
+                  <option value="Nilesh (Founder)">Nilesh (Founder)</option>
+                  <option value="Gaurav (Founder)">Gaurav (Founder)</option>
+                </select>
+              </div>
+
+              <div class="bar-group bar-flex-grow" style="min-width: 260px; flex: 2;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">EXECUTIVE MEETING DIRECTIVES &amp; SCOPE INSTRUCTIONS</label>
+                <input type="text" id="delegationInstructionsInput" class="bar-input" placeholder="e.g. Meet client on-site, inspect elevations, and prepare 3D floorplan..." style="width: 100%;" required>
+              </div>
+
+              <button type="submit" class="btn-assign-task" style="background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%); border: none; padding: 12px 24px; font-weight: 800; font-size: 0.92rem; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35); color: #FFFFFF; border-radius: 8px; cursor: pointer; white-space: nowrap;">
+                🚀 Assign &amp; Schedule Meeting
+              </button>
+            </form>
+          </div>
+
+          <!-- MODULE 2: APPOINTMENTS REGISTER TABLE -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <h3>2. Client Consultation Appointments Register (Online Bookings)</h3>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="appointmentSearchInput" class="bar-input" placeholder="🔍 Search name, phone, or service..." style="width: 240px; padding: 7px 12px; font-size: 0.85rem;">
+              <select id="appointmentStatusFilter" class="bar-select" style="padding: 7px 10px; font-size: 0.85rem;">
+                <option value="All">All Statuses</option>
+                <option value="Pending Founder Action">Pending Founder Action</option>
+                <option value="Delegated to Head Designer">Delegated to Head Designer</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">REF ID &amp; CLIENT</th>
+                  <th style="width: 200px;">CONTACT DETAILS</th>
+                  <th style="width: 220px;">SCHEDULED DATE &amp; TIME</th>
+                  <th>CONSULTATION SCOPE &amp; NOTES</th>
+                  <th style="width: 220px;">ASSIGNED PERSON / DIRECTIVES</th>
+                  <th style="width: 150px;">STATUS</th>
+                  <th style="width: 140px;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentsTableBody">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 3.5: 💎 MATERIAL & DESIGN SELECTION APPROVALS (FOUNDER GOVERNANCE)
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabSelections">
+        <section class="wf-card-panel" id="founderSelectionSection">
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="icon-user-badge">💎</span>
+              <div>
+                <h2 style="margin: 0; font-size: 1.25rem; color: #1E2532;">
+                  DESIGN &amp; MATERIAL SELECTION APPROVALS (GOVERNANCE SUITE)
+                </h2>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                  Review and authorize material samples, luxury finishes, and architectural schemes submitted by Head Designers.
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span class="badge-total-bookings" id="badgeTotalSelections" style="background: rgba(217, 119, 6, 0.12); color: #D97706; border: 1.5px solid #F59E0B; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Total: 0</span>
+              <span class="badge-total-bookings" id="badgePendingSelections" style="background: rgba(220, 38, 38, 0.12); color: #DC2626; border: 1.5px solid #EF4444; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Pending Sign-Off: 0</span>
+              <span class="badge-total-bookings" id="badgeApprovedSelections" style="background: rgba(5, 150, 105, 0.12); color: #059669; border: 1.5px solid #10B981; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Approved &amp; Cleared: 0</span>
+            </div>
+          </div>
+
+          <!-- Selection Filter & Search Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; background: #FAF8F5; border: 1.5px solid #E5DCCB; border-radius: 12px; padding: 12px 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px;">
+              <span style="font-size: 1rem;">🔍</span>
+              <input type="text" id="founderSelectionSearchInput" placeholder="Search by Project, Head Designer, Material, or Ref ID..." style="width: 100%; border: none; background: transparent; font-size: 0.88rem; outline: none; color: #0F172A;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <label style="font-size: 0.78rem; font-weight: 800; color: #64748B;">STATUS FILTER:</label>
+              <select id="founderSelectionStatusFilter" style="padding: 6px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.82rem; background: #FFFFFF; color: #0F172A;">
+                <option value="All">All Selections</option>
+                <option value="Awaiting Founder Approval">⏳ Awaiting Founder Approval</option>
+                <option value="Approved by Founder">✅ Approved &amp; Cleared</option>
+                <option value="Revision Requested">⚠️ Revision Requested</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Founder Selection Register Table -->
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 160px;">REF ID &amp; DATE</th>
+                  <th style="width: 200px;">PROJECT &amp; CATEGORY</th>
+                  <th style="width: 170px;">SUBMITTED BY</th>
+                  <th>PROPOSED MATERIAL SPECS &amp; DOSSIER</th>
+                  <th style="width: 170px;">CURRENT STATUS</th>
+                  <th style="width: 220px;">FOUNDER GOVERNANCE ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="founderSelectionsTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 4: REGIONAL BRANCH WORKFORCE HUBS (GUJARAT OPERATIONS)
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabRegionalHubs">
+        <section class="wf-card-panel" id="regionalHubSection">
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="icon-location-pin">📍</span>
+              <h2>GUJARAT REGIONAL BRANCH WORKFORCE (<span id="activeCityTitle">Ahmedabad Central Hub</span>)</h2>
+            </div>
+            <span style="font-size: 0.85rem; color: #8A6836; font-weight: 700;">🏛️ Prolific Statewide Operations</span>
+          </div>
+
+          <!-- City Selector Tabs -->
+          <div class="city-tabs" id="cityTabsRow" style="margin-bottom: 20px;">
+            <button class="city-tab active" data-city="Ahmedabad">Ahmedabad Hub</button>
+            <button class="city-tab" data-city="Surat">Surat Studio (HQ)</button>
+            <button class="city-tab" data-city="Vadodara">Vadodara</button>
+            <button class="city-tab" data-city="Rajkot">Rajkot</button>
+            <button class="city-tab" data-city="Bhavnagar">Bhavnagar</button>
+            <button class="city-tab" data-city="Jamnagar">Jamnagar</button>
+            <button class="city-tab" data-city="Gandhinagar">Gandhinagar</button>
+            <button class="city-tab" data-city="Junagadh">Junagadh</button>
+          </div>
+
+          <!-- Regional Branch Overview & Workforce Table -->
+          <div class="task-register-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="color: #0C1220; margin: 0;">Assigned Sub Designers &amp; Field Specialists in <span id="activeCitySubLabel" style="color: #0284C7;">Ahmedabad</span></h3>
+            <span id="cityEmpCountBadge" style="background: rgba(2, 132, 199, 0.1); color: #0284C7; font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 9999px;">0 Active Staff</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">S.NO</th>
+                  <th style="width: 200px;">EMPLOYEE NAME</th>
+                  <th style="width: 140px;">ROLE CODE</th>
+                  <th>SPECIALIZATION &amp; REGISTERED WORK</th>
+                  <th style="width: 160px;">HEAD DESIGNER</th>
+                  <th style="width: 140px;">STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="cityWorkTable">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 6: ONGOING PROJECTS (ARCHITECTURE & INTERIOR DISCIPLINE)
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabOngoingProjects">
+        <section class="wf-card-panel" id="ongoingProjectsSection">
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="icon-user-badge" style="font-size: 1.3rem;">🏗️</span>
+              <div>
+                <h2 style="margin: 0; font-size: 1.25rem; color: #1E2532;">
+                  ONGOING PROJECTS (ARCHITECTURE &amp; INTERIOR DISCIPLINE)
+                </h2>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                  Live monitoring of active turnkey architectural blueprints, structural drawings, and luxury interior design projects.
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span class="badge-total-bookings" id="badgeOngoingTotal" style="background: rgba(2, 132, 199, 0.12); color: #0284C7; border: 1.5px solid #38BDF8; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Total: 8 Projects</span>
+              <span class="badge-total-bookings" id="badgeOngoingArch" style="background: rgba(3, 105, 161, 0.12); color: #0369A1; border: 1.5px solid #BAE6FD; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Architecture: 4</span>
+              <span class="badge-total-bookings" id="badgeOngoingInt" style="background: rgba(217, 119, 6, 0.12); color: #D97706; border: 1.5px solid #FCD34D; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Interior: 4</span>
+            </div>
+          </div>
+
+          <!-- PROMINENT DISCIPLINE SELECTION PROMPT & CONTROLLER -->
+          <div style="background: linear-gradient(135deg, #FAF7F2 0%, #F5EFE3 100%); border: 2px solid #C5A880; border-radius: 14px; padding: 18px 22px; margin-bottom: 22px; box-shadow: 0 4px 16px rgba(197, 168, 128, 0.12);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+              <div>
+                <label style="font-size: 0.78rem; font-weight: 900; color: #8A6836; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 2px;">
+                  SELECT DISCIPLINE CATEGORY:
+                </label>
+                <div style="font-size: 0.96rem; font-weight: 800; color: #1E2532;">
+                  Which ongoing projects would you like to inspect?
+                </div>
+              </div>
+              <span style="font-size: 0.78rem; color: #64748B; font-weight: 600;">Click below to filter live projects by discipline</span>
+            </div>
+
+            <!-- DISCIPLINE FILTER BUTTONS (ALL / ARCHITECTURE / INTERIOR) -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="ongoingDisciplineTabs">
+              <button type="button" class="ongoing-discipline-btn active" data-discipline="all" style="flex: 1; min-width: 160px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>🏢</span> All Ongoing Projects (<span id="countDisciplineAll">8</span>)
+              </button>
+              <button type="button" class="ongoing-discipline-btn" data-discipline="Architecture" style="flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>🏛️</span> Ongoing Architecture (<span id="countDisciplineArch">4</span>)
+              </button>
+              <button type="button" class="ongoing-discipline-btn" data-discipline="Interior" style="flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>🛋️</span> Ongoing Interior (<span id="countDisciplineInt">4</span>)
+              </button>
+            </div>
+          </div>
+
+          <!-- SEARCH & SECONDARY FILTERS BAR -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; background: #FAF8F5; border: 1.5px solid #E5DCCB; border-radius: 12px; padding: 12px 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px;">
+              <span style="font-size: 1rem;">🔍</span>
+              <input type="text" id="ongoingSearchInput" placeholder="Search by Project Name, Ref ID, Scope, Head Designer, or Sub Designer..." style="width: 100%; border: none; background: transparent; font-size: 0.88rem; outline: none; color: #0F172A; font-weight: 600;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <select id="ongoingCityFilter" class="bar-select" style="padding: 6px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.82rem; background: #FFFFFF; color: #0F172A; font-weight: 700;">
+                <option value="All">All Branch Cities</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Junagadh">Junagadh</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+              </select>
+              <select id="ongoingPriorityFilter" class="bar-select" style="padding: 6px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.82rem; background: #FFFFFF; color: #0F172A; font-weight: 700;">
+                <option value="All">All Priorities</option>
+                <option value="Urgent">🚨 Urgent Priority Only</option>
+                <option value="Standard">⚡ Standard Priority Only</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ONGOING PROJECTS TABLE -->
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 140px;">DISCIPLINE &amp; PRIORITY</th>
+                  <th style="width: 240px;">PROJECT NAME &amp; LOCATION</th>
+                  <th>DRAWING SCOPE &amp; SPECIFICATIONS</th>
+                  <th style="width: 200px;">ASSIGNED PERSONNEL</th>
+                  <th style="width: 170px;">STAGE &amp; PROGRESS</th>
+                  <th style="width: 140px;">TARGET DEADLINE</th>
+                  <th style="width: 140px;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="ongoingProjectsTableBody">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============================================================
+           TAB 7: PROJECT PROPOSALS & CLIENT PITCHES (PRE-CONTRACT)
+           ============================================================ -->
+      <div class="wf-tab-content-panel" id="tabProposals">
+        <section class="wf-card-panel" id="proposalsSection">
+          <div class="wf-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="icon-user-badge" style="font-size: 1.3rem;">📑</span>
+              <div>
+                <h2 style="margin: 0; font-size: 1.25rem; color: #1E2532;">
+                  PROJECT PROPOSALS &amp; CLIENT PITCH GOVERNANCE
+                </h2>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                  Prospective client tenders, pre-contract architectural bids, interior quotations, and feasibility proposals awaiting client authorization or kickoff.
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span class="badge-total-bookings" id="badgeProposalsTotal" style="background: rgba(124, 58, 237, 0.12); color: #7C3AED; border: 1.5px solid #C084FC; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Total: 6 Proposals</span>
+              <span class="badge-total-bookings" id="badgeProposalsArch" style="background: rgba(3, 105, 161, 0.12); color: #0369A1; border: 1.5px solid #BAE6FD; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Architecture: 3</span>
+              <span class="badge-total-bookings" id="badgeProposalsInt" style="background: rgba(147, 51, 234, 0.12); color: #9333EA; border: 1.5px solid #E9D5FF; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Interior: 3</span>
+              <span class="badge-total-bookings" id="badgeProposalsPipeline" style="background: rgba(5, 150, 105, 0.12); color: #059669; border: 1.5px solid #6EE7B7; font-weight: 800; padding: 5px 14px; border-radius: 9999px; font-size: 0.82rem;">Pipeline Value: ₹8.15 Cr</span>
+            </div>
+          </div>
+
+          <!-- PROMINENT DISCIPLINE SELECTION PROMPT & CONTROLLER -->
+          <div style="background: linear-gradient(135deg, #FAF7F2 0%, #F5EFE3 100%); border: 2px solid #C5A880; border-radius: 14px; padding: 18px 22px; margin-bottom: 22px; box-shadow: 0 4px 16px rgba(197, 168, 128, 0.12);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+              <div>
+                <label style="font-size: 0.78rem; font-weight: 900; color: #8A6836; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 2px;">
+                  SELECT PROPOSAL DISCIPLINE CATEGORY:
+                </label>
+                <div style="font-size: 0.96rem; font-weight: 800; color: #1E2532;">
+                  Which prospective client proposals would you like to inspect?
+                </div>
+              </div>
+              <button type="button" id="btnToggleNewProposalForm" style="background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); color: #FFFFFF; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">
+                <span>➕</span> Create New Client Proposal Pitch
+              </button>
+            </div>
+
+            <!-- DISCIPLINE FILTER BUTTONS (ALL / ARCHITECTURE / INTERIOR) -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="proposalDisciplineTabs">
+              <button type="button" class="proposal-discipline-btn active" data-discipline="all" style="flex: 1; min-width: 160px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>💼</span> All Proposals (<span id="countProposalAll">6</span>)
+              </button>
+              <button type="button" class="proposal-discipline-btn" data-discipline="Architecture" style="flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>🏛️</span> Architecture Proposals (<span id="countProposalArch">3</span>)
+              </button>
+              <button type="button" class="proposal-discipline-btn" data-discipline="Interior" style="flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;">
+                <span>🛋️</span> Interior Proposals (<span id="countProposalInt">3</span>)
+              </button>
+            </div>
+          </div>
+
+          <!-- COLLAPSIBLE NEW PROPOSAL REGISTRATION FORM -->
+          <div id="newProposalFormContainer" style="display: none; background: #FAF7F2; border: 1.5px solid #7C3AED; border-radius: 14px; padding: 20px; margin-bottom: 22px; box-shadow: 0 4px 18px rgba(124, 58, 237, 0.15);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1.5px solid #E9D5FF; padding-bottom: 10px;">
+              <h3 style="color: #6D28D9; margin: 0; font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span>📑</span> REGISTER NEW PROSPECTIVE CLIENT PROPOSAL &amp; PITCH
+              </h3>
+              <button type="button" id="btnCloseNewProposalForm" style="background: transparent; border: none; font-size: 1.1rem; cursor: pointer; color: #64748B;">✕</button>
+            </div>
+
+            <form id="newProposalForm" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
+              <div class="bar-group" style="min-width: 200px; flex: 1;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">PROSPECTIVE CLIENT NAME</label>
+                <input type="text" id="propClientInput" class="bar-input" placeholder="e.g. Mr. Rajeshbhai Patel" required style="width: 100%;">
+              </div>
+
+              <div class="bar-group" style="min-width: 220px; flex: 1.2;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">PROPOSED PROJECT TITLE</label>
+                <input type="text" id="propTitleInput" class="bar-input" placeholder="e.g. Signature Commercial Arcade" required style="width: 100%;">
+              </div>
+
+              <div class="bar-group" style="min-width: 140px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">DISCIPLINE</label>
+                <select id="propDisciplineSelect" class="bar-select" style="width: 100%; font-weight: 700;">
+                  <option value="Architecture" selected>🏛️ Architecture</option>
+                  <option value="Interior">🛋️ Interior</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 130px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">BRANCH CITY</label>
+                <select id="propCitySelect" class="bar-select" style="width: 100%;">
+                  <option value="Ahmedabad">Ahmedabad</option>
+                  <option value="Surat">Surat</option>
+                  <option value="Vadodara">Vadodara</option>
+                  <option value="Rajkot">Rajkot</option>
+                  <option value="Gandhinagar">Gandhinagar</option>
+                  <option value="Junagadh">Junagadh</option>
+                  <option value="Jamnagar">Jamnagar</option>
+                  <option value="Bhavnagar">Bhavnagar</option>
+                </select>
+              </div>
+
+              <div class="bar-group" style="min-width: 140px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">ESTIMATED BUDGET / VALUE</label>
+                <input type="text" id="propValueInput" class="bar-input" placeholder="e.g. ₹1.25 Crore" required style="width: 100%;">
+              </div>
+
+              <div class="bar-group" style="min-width: 170px;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">LEAD HEAD DESIGNER (PITCH)</label>
+                <select id="propManagerSelect" class="bar-select" style="width: 100%; font-weight: 700;">
+                  <option value="Shashikant Bhai">Shashikant Bhai (HD001)</option>
+                  <option value="Hardik">Hardik (HD002)</option>
+                  <option value="Shivang">Shivang (HD003)</option>
+                  <option value="Sunita">Sunita (HD004)</option>
+                  <option value="Helly">Helly (HD005)</option>
+                  <option value="Harshita">Harshita (HD006)</option>
+                </select>
+              </div>
+
+              <div class="bar-group bar-flex-grow" style="min-width: 240px; flex: 2;">
+                <label style="color: #64748B; font-size: 0.74rem; font-weight: 700;">PROPOSAL SCOPE &amp; SPECIFICATIONS</label>
+                <input type="text" id="propScopeInput" class="bar-input" placeholder="Enter detailed client requirements, area sq.ft, and pitch status..." required style="width: 100%;">
+              </div>
+
+              <button type="submit" class="btn-assign-task" style="background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); border: none; padding: 12px 24px; font-weight: 800; font-size: 0.92rem; color: #FFFFFF; border-radius: 8px; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);">
+                🚀 Register Client Proposal
+              </button>
+            </form>
+          </div>
+
+          <!-- SEARCH & SECONDARY FILTERS BAR -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; background: #FAF8F5; border: 1.5px solid #E5DCCB; border-radius: 12px; padding: 12px 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px;">
+              <span style="font-size: 1rem;">🔍</span>
+              <input type="text" id="proposalSearchInput" placeholder="Search by Client Name, Proposal Ref, Scope, or Lead Designer..." style="width: 100%; border: none; background: transparent; font-size: 0.88rem; outline: none; color: #0F172A; font-weight: 600;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <select id="proposalCityFilter" class="bar-select" style="padding: 6px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.82rem; background: #FFFFFF; color: #0F172A; font-weight: 700;">
+                <option value="All">All Branch Cities</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+                <option value="Junagadh">Junagadh</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+              </select>
+              <select id="proposalStageFilter" class="bar-select" style="padding: 6px 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.82rem; background: #FFFFFF; color: #0F172A; font-weight: 700;">
+                <option value="All">All Proposal Stages</option>
+                <option value="Under Negotiation">Under Negotiation</option>
+                <option value="Concept Pitch">Concept Pitch</option>
+                <option value="Client Review">Client Review</option>
+                <option value="Ready to Convert">Ready to Convert</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PROPOSALS TABLE -->
+          <div class="table-responsive">
+            <table class="wf-table">
+              <thead>
+                <tr>
+                  <th style="width: 140px;">DISCIPLINE &amp; STATUS</th>
+                  <th style="width: 240px;">PROSPECTIVE CLIENT &amp; PROJECT</th>
+                  <th>PROPOSED SCOPE &amp; DOSSIER</th>
+                  <th style="width: 160px;">ESTIMATED VALUE</th>
+                  <th style="width: 170px;">PITCH LEAD &amp; STAGE</th>
+                  <th style="width: 130px;">DATE RECEIVED</th>
+                  <th style="width: 160px;">FOUNDER ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="proposalsTableBody">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ========== SWITCH FOUNDER PASSWORD MODAL ========== -->
+  <div class="switch-modal-overlay" id="switchFounderOverlay">
+    <div class="switch-modal-card">
+      <div class="switch-modal-icon">🔐</div>
+      <h3>Switch Founder Account</h3>
+      <p class="switch-subtitle">Enter password to switch between Founder workspace accounts.</p>
+
+      <form id="switchFounderForm">
+        <div class="form-group" style="text-align: left; margin-bottom: 12px;">
+          <label class="plaque-label" style="color: #64748B;">SELECT FOUNDER</label>
+          <select id="switchFounderSelect" class="bar-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1A2436; color: #F9FAFB;">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div class="form-group" style="text-align: left; margin-bottom: 8px;">
+          <label class="plaque-label" style="color: #64748B;">ENTER ACCESS PASSWORD</label>
+          <input type="password" id="switchFounderPassword" class="switch-password-input" placeholder="••••••••" required>
+        </div>
+
+        <div class="switch-modal-actions">
+          <button type="submit" class="btn-switch-confirm">Switch Account</button>
+          <button type="button" class="btn-switch-cancel" id="cancelSwitchFounder">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== ASSIGN TASK TO HEAD DESIGNER MODAL ========== -->
+  <div class="modal-backdrop" id="assignManagerModal">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3 style="color: #8A6836; display: flex; align-items: center; gap: 8px; font-family: var(--font-serif); margin: 0;">
+          <span>📌</span> ASSIGN TASK TO HEAD DESIGNER
+        </h3>
+        <button class="modal-close" id="closeAssignMgrModal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding-top: 16px;">
+        <form id="assignTaskModalForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SELECT HEAD DESIGNER</label>
+              <select id="modalAssignManagerSelect" class="bar-select" style="width: 100%; padding: 10px 12px;" required>
+                <option value="Shashikant Bhai">Shashikant Bhai (MGR001)</option>
+                <option value="Hardik">Hardik (MGR002)</option>
+                <option value="Shivang">Shivang (MGR003)</option>
+                <option value="Sunita">Sunita (MGR004)</option>
+                <option value="Helly">Helly (MGR005)</option>
+                <option value="Harshita">Harshita (MGR006)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">TASK PRIORITY</label>
+              <select id="modalAssignPrioritySelect" class="bar-select" style="width: 100%; padding: 10px 12px; font-weight: 700;">
+                <option value="Urgent">🚨 Urgent</option>
+                <option value="Standard" selected>⚡ Standard</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">DISCIPLINE</label>
+              <select id="modalAssignDisciplineSelect" class="bar-select" style="width: 100%; padding: 10px 12px; font-weight: 700;">
+                <option value="Architecture" selected>🏛️ Architecture</option>
+                <option value="Interior">🛋️ Interior</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">BRANCH CITY</label>
+              <select id="modalAssignCitySelect" class="bar-select" style="width: 100%; padding: 10px 12px;">
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SUBMISSION DEADLINE</label>
+              <input type="date" id="modalAssignDeadlineInput" class="bar-input" style="width: 100%; padding: 8px 10px;" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">TASK WORK DESCRIPTION</label>
+            <textarea id="modalAssignDescInput" class="form-control" rows="3" style="border: 1.5px solid #DCD2C0; border-radius: 8px; padding: 12px; width: 100%; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5;" placeholder="Enter architectural drawing review, structural check, or site supervision specs..." required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 20px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">INITIAL STATUS</label>
+              <select id="modalAssignStatusSelect" class="bar-select" style="width: 100%; padding: 9px 10px;">
+                <option value="Ongoing" selected>Ongoing</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1.5px solid #EFE8DA; padding-top: 16px;">
+            <button type="button" class="btn-switch-cancel" id="cancelAssignMgrModal">Cancel</button>
+            <button type="submit" class="btn-assign-task" style="padding: 10px 22px; font-weight: 800;">+ Assign Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ASSIGN TASK DIRECTLY TO EMPLOYEE MODAL ========== -->
+  <div class="modal-backdrop" id="assignDirectEmpModal">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3 style="color: #047857; display: flex; align-items: center; gap: 8px; font-family: var(--font-serif); margin: 0;">
+          <span>✨</span> ASSIGN TASK DIRECTLY TO EMPLOYEE
+        </h3>
+        <button class="modal-close" id="closeAssignEmpModal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding-top: 16px;">
+        <form id="assignDirectEmpModalForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SELECT SUB DESIGNER</label>
+              <select id="modalDirectEmpSelect" class="bar-select" style="width: 100%; padding: 10px 12px; font-weight: 700;" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">PRIORITY</label>
+              <select id="modalDirectPrioritySelect" class="bar-select" style="width: 100%; padding: 10px 12px; font-weight: 700;">
+                <option value="Urgent">🚨 Urgent</option>
+                <option value="Standard" selected>⚡ Standard</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">DISCIPLINE</label>
+              <select id="modalDirectDisciplineSelect" class="bar-select" style="width: 100%; padding: 10px 12px; font-weight: 700;">
+                <option value="Architecture" selected>🏛️ Architecture</option>
+                <option value="Interior">🛋️ Interior</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">BRANCH CITY</label>
+              <select id="modalDirectCitySelect" class="bar-select" style="width: 100%; padding: 10px 12px;">
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+                <option value="Junagadh">Junagadh</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SUBMISSION DEADLINE</label>
+              <input type="date" id="modalDirectDeadlineInput" class="bar-input" style="width: 100%; padding: 8px 10px;" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">TASK WORK DESCRIPTION</label>
+            <textarea id="modalDirectDescInput" class="form-control" rows="3" style="border: 1.5px solid #DCD2C0; border-radius: 8px; padding: 12px; width: 100%; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5;" placeholder="Enter drafting, 3D render, structural calculation, or material spec details..." required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 20px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #64748B; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">STATUS</label>
+              <select id="modalDirectStatusSelect" class="bar-select" style="width: 100%; padding: 9px 10px;">
+                <option value="Ongoing" selected>Ongoing</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1.5px solid #EFE8DA; padding-top: 16px;">
+            <button type="button" class="btn-switch-cancel" id="cancelAssignEmpModal">Cancel</button>
+            <button type="submit" class="btn-assign-task" style="background-color: #047857; border-color: #059669; padding: 10px 22px; font-weight: 800;">+ Assign Task Directly</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== EDIT / REMOVE ASSIGNED TASK MODAL (FOUNDER ONLY) ========== -->
+  <div class="modal-backdrop" id="editTaskModal">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3 style="color: #FFFFFF; display: flex; align-items: center; gap: 8px;">
+          <span>✏️</span> EDIT / REMOVE ASSIGNED TASK
+        </h3>
+        <button class="modal-close" id="closeEditTaskModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editTaskForm">
+          <input type="hidden" id="editTaskId">
+          <input type="hidden" id="editTaskType"> <!-- 'dispatched' or 'directEmp' -->
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">ASSIGN TASK TO</label>
+              <select id="editTaskAssigneeSelect" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;" required>
+                <!-- Populated via JS with Managers and Employees -->
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">TASK PRIORITY</label>
+              <select id="editTaskPriority" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Urgent">🚨 Urgent</option>
+                <option value="Standard">⚡ Standard</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">DISCIPLINE</label>
+              <select id="editTaskDiscipline" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155; font-weight: 700;">
+                <option value="Architecture" selected>🏛️ Architecture</option>
+                <option value="Interior">🛋️ Interior</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">ASSIGNED BY</label>
+              <select id="editTaskAssignedBy" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Gaurav (Head)">Gaurav (Head)</option>
+                <option value="Nilesh (Head)">Nilesh (Head)</option>
+                <option value="Shashikant Bhai">Shashikant Bhai (Sub Head)</option>
+                <option value="Hardik">Hardik (Sub Head)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">CITY BRANCH</label>
+              <select id="editTaskCity" class="bar-select" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Rajkot">Rajkot</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Jamnagar">Jamnagar</option>
+                <option value="Gandhinagar">Gandhinagar</option>
+                <option value="Junagadh">Junagadh</option>
+                <option value="Anand">Anand</option>
+                <option value="Navsari">Navsari</option>
+                <option value="Morbi">Morbi</option>
+                <option value="Bharuch">Bharuch</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">WORK DESCRIPTION / TASK TITLE</label>
+            <textarea id="editTaskDesc" class="form-control" rows="3" style="background-color: #0F172A; border: 1px solid #334155; color: #F8FAFC; border-radius: 8px; padding: 12px; width: 100%; font-size: 0.88rem; font-family: var(--font-sans); line-height: 1.5;" required></textarea>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 14px;">
+            <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">CAD SPECIFICATION FILE (OPTIONAL)</label>
+            <input type="text" id="editTaskCadFile" class="bar-input" style="width: 100%; padding: 10px 12px; background: #0F172A; color: #FFFFFF; border-color: #334155;" placeholder="e.g. Commercial_Hub_Elevation_Draft_v2.dwg">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">SUBMISSION DEADLINE</label>
+              <input type="date" id="editTaskDeadline" class="bar-input" style="width: 100%; padding: 8px 10px; background: #0F172A; color: #FFFFFF; border-color: #334155;" required>
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+              <label style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; display: block; margin-bottom: 6px;">STATUS</label>
+              <select id="editTaskStatus" class="bar-select" style="width: 100%; padding: 9px 10px; background: #0F172A; color: #FFFFFF; border-color: #334155;">
+                <option value="Ongoing">Ongoing</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; border-top: 1px solid #283750; padding-top: 16px;">
+            <button type="button" class="btn-task-delete" id="btnDeleteTask" title="Delete this task completely">
+              <span>🗑️</span> Remove Task
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn-switch-cancel" id="cancelEditTask">Cancel</button>
+              <button type="submit" class="btn-switch-confirm" style="background: #0284C7; border-color: #0284C7;">💾 Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROLIFIC | Luxury Real Estate & Interior Design</title>
+  <meta name="description" content="Pioneering Luxury Interiors & Premier Real Estate Advisory. Architectural Elegance, Turnkey Execution, and Bespoke Living Spaces.">
+  <link rel="icon" type="image/png" href="images/logo-dark.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       PAGE 1: HEADER & HERO SECTION
+       ========================================================================== -->
+  <header class="site-header" id="home">
+    <div class="container">
+      <!-- Top Utility Action Bar (Member Login) -->
+      <div class="top-action-bar">
+        <div class="top-security-badge">
+          <span class="pulse-dot"></span>
+          <span>EST. 2026 • ARCHITECTURAL EXCELLENCE</span>
+        </div>
+        <a href="login.html" class="btn-member-login" id="openLoginBtn">MEMBER LOGIN</a>
+      </div>
+
+      <!-- Grand Center Logo -->
+      <div class="brand-hero-center">
+        <a href="index.html" class="main-logo-centered" title="PROLIFIC Real Estate &amp; Interior Design">
+          <img src="images/logo-dark.png" alt="PROLIFIC" class="main-logo-img grand-logo">
+        </a>
+      </div>
+
+      <!-- Main Navigation Bar (Pill Container) -->
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">HOME</a>
+        <a href="about.html" class="nav-link">ABOUT US</a>
+        <a href="contact.html" class="nav-link">CONTACT US</a>
+        <a href="#properties" class="nav-link">PROJECTS</a>
+        <a href="#services" class="nav-link">SERVICES</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column: Title & Bullets -->
+          <div class="hero-content">
+            <h1>Architectural Elegance &amp; Luxury Spaces</h1>
+            <ul class="hero-bullets">
+              <li>
+                <span class="bullet-arrow">&gt;</span>
+                <span>Premium interior design and strategic real estate advisory.</span>
+              </li>
+              <li>
+                <span class="bullet-arrow">&gt;</span>
+                <span>End-to-end turnkey project execution from concept to key handover.</span>
+              </li>
+              <li>
+                <span class="bullet-arrow">&gt;</span>
+                <span>Custom residential, commercial, and modular living solutions.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right Column: Hero Villa Image -->
+          <div class="hero-image-wrapper">
+            <img src="images/hero-villa.png" alt="Luxury Architectural Villa at Dusk" class="hero-img">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAGE 2: OUR PROJECTS GALLERY (3D COVERFLOW INFINITE LOOP)
+         ========================================================================== -->
+    <!-- ==========================================================================
+         PAGE 2: OUR PROJECTS GALLERY (BLACK & WHITE SLIDES WITH INLINE COLOR DETAILS)
+         ========================================================================== -->
+    <section class="gallery-section" id="properties">
+      <div class="container">
+        <div class="section-header">
+          <span class="brand-label">PROLIFIC</span>
+          <h2 class="section-title">OUR PROJECTS GALLERY</h2>
+        </div>
+
+        <!-- Category Filters (Only Architecture & Interior) -->
+        <div class="gallery-filters">
+          <button class="filter-btn active" data-filter="architecture">ARCHITECTURE (6)</button>
+          <button class="filter-btn" data-filter="interior">INTERIOR (7)</button>
+        </div>
+
+        <!-- Black & White Gallery Slides View Container -->
+        <div class="gallery-slider-container">
+          <!-- Slide Navigation Button Prev -->
+          <button type="button" class="gallery-slide-nav-btn prev-btn" id="gallerySlidePrevBtn" aria-label="Previous Slide">&larr;</button>
+
+          <!-- Slide Track Viewport (Shows 1 Black & White Slide with Location on Image) -->
+          <div class="gallery-slider-viewport" id="gallerySliderViewport">
+            <div class="gallery-slider-track" id="gallerySliderTrack">
+              <!-- Dynamically populated Black & White Slide Cards with Visible Location by app.js -->
+            </div>
+          </div>
+
+          <!-- Slide Navigation Button Next -->
+          <button type="button" class="gallery-slide-nav-btn next-btn" id="gallerySlideNextBtn" aria-label="Next Slide">&rarr;</button>
+        </div>
+
+        <!-- Smooth Gallery Interactive Indicator & Pagination Controls -->
+        <div class="gallery-slider-controls" id="gallerySliderControls">
+          <div class="gallery-slider-hint" title="Drag with mouse, swipe with finger, or scroll horizontally">
+            <span class="gallery-slider-hint-icon">↔</span>
+            <span>Smooth Drag &amp; Swipe</span>
+          </div>
+          <div class="gallery-slider-dots" id="gallerySliderDots">
+            <!-- Dynamically populated smooth animated pill dots -->
+          </div>
+          <div class="gallery-slider-counter" title="Current Slide Index">
+            <span id="galleryCurrentSlideNum">01</span> / <span id="galleryTotalSlideNum">06</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAGE 3: OUR DESIGN & MANAGEMENT SERVICES
+         ========================================================================== -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <span class="brand-label">PROLIFIC</span>
+          <h2 class="section-title">OUR DESIGN &amp; MANAGEMENT SERVICES</h2>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Residential Interior Design</h3>
+              <p>Tailored luxury residences, private villas, and bespoke apartment spaces.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-4a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Lighting &amp; Electrical Design</h3>
+              <p>Architectural lighting concepts, ambient LED layering, and home automation.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0v-4a1 1 0 011-1h2a1 1 0 011 1v4m-6 0h6"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Commercial Interior Design</h3>
+              <p>Corporate headquarters, boutique retail shops, and hospitality architecture.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Custom Furniture &amp; Carpentry</h3>
+              <p>Handcrafted furniture, artisan wood joinery, and custom wardrobes.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Modular Kitchen Design</h3>
+              <p>Ergonomic kitchens with premium stone counters and smart storage.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>3D Design &amp; Visualization</h3>
+              <p>Photorealistic 3D renderings and immersive virtual walkthroughs.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Bedroom &amp; Living Room Design</h3>
+              <p>Cohesive aesthetic planning for master suites and formal lounge areas.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a2 2 0 01-4 0V4zm-6 8a2 2 0 100-4 2 2 0 000 4zm14 0a2 2 0 100-4 2 2 0 000 4zM6 20h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Renovation &amp; Remodeling</h3>
+              <p>Structural upgrades, spatial reconfiguration, and complete property renewal.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Bathroom Interior Design</h3>
+              <p>Spa-inspired luxury bathrooms with custom stone tiling and vanity fixtures.</p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="service-info">
+              <h3>Turnkey Project Management</h3>
+              <p>Complete execution from initial drawings through construction to final key handover.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAGE 4: WHY CHOOSE PROLIFIC
+         ========================================================================== -->
+    <section class="why-choose-section" id="about-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="brand-label">PROLIFIC</span>
+          <h2 class="section-title">WHY CHOOSE PROLIFIC</h2>
+        </div>
+
+        <div class="why-choose-grid">
+          <div class="feature-card">
+            <div class="feature-icon-badge">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v3m0 0l-4 12m4-12l4 12M8 15h8M12 6a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+            </div>
+            <h3>Bespoke Design</h3>
+            <p>Every space is custom tailored to maximize spatial utility, light, and modern refinement.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-badge">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <h3>Real Estate Value</h3>
+            <p>We blend architectural mastery with strategic market positioning for maximum asset value.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-badge">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </div>
+            <h3>Seamless Delivery</h3>
+            <p>Transparent cost management, strict timeline adherence, and dedicated project supervision.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAGE 5: OUR TRACK RECORD
+         ========================================================================== -->
+    <section class="track-record-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="brand-label">PROLIFIC</span>
+          <h2 class="section-title">OUR TRACK RECORD</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" data-target="250">250+</div>
+            <div class="stat-label">COMPLETED PROJECTS</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="99">99%</div>
+            <div class="stat-label">ON-TIME HANDOVER RATE</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PAGES 6 & 7: FULL-WIDTH NAVY FOOTER & EXCELLENCE SECTION
+         ========================================================================== -->
+    <section class="full-navy-footer-section" id="contact">
+      <div class="container">
+        <!-- Touch Header -->
+        <div class="touch-header">
+          <h2>Experience the Prolific Touch</h2>
+          <p>From luxury residential interior transformations to strategic real estate developments, Prolific delivers unmatched elegance, professional project management, and lasting value.</p>
+        </div>
+
+        <!-- Main Footer Navigation & Brand Row -->
+        <footer class="main-footer">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <img src="images/logo-dark.png" alt="PROLIFIC" class="footer-logo-img">
+            </div>
+            <p class="footer-tagline">Pioneering Luxury Interiors &amp; Premier Real Estate Advisory.</p>
+            <div class="footer-social-links" style="display: flex; gap: 12px; margin: 12px 0;">
+              <a href="https://instagram.com/prolific_design" target="_blank" rel="noopener" class="footer-social-icon" title="Follow us on Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(197, 168, 128, 0.15); color: #C5A880; border: 1px solid rgba(197, 168, 128, 0.4); transition: all 0.3s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+              <a href="https://linkedin.com/company/prolific-design" target="_blank" rel="noopener" class="footer-social-icon" title="Connect on LinkedIn" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(0, 119, 181, 0.15); color: #0077B5; border: 1px solid rgba(0, 119, 181, 0.4); transition: all 0.3s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+              <a href="https://x.com/prolific_spaces" target="_blank" rel="noopener" class="footer-social-icon" title="Follow on X" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); transition: all 0.3s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://wa.me/919106555373" target="_blank" rel="noopener" class="footer-social-icon" title="Chat on WhatsApp" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.4); transition: all 0.3s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Prolific Interiors &amp; Real Estate. All rights reserved.</p>
+          </div>
+
+          <div class="footer-right">
+            <nav class="footer-nav">
+              <a href="index.html">HOME</a>
+              <a href="about.html">ABOUT US</a>
+              <a href="#properties">PROJECTS</a>
+              <a href="#services">SERVICES</a>
+            </nav>
+            <a href="contact.html" class="btn-contact-us">CONTACT US</a>
+          </div>
+        </footer>
+
+        <!-- Excellence Banner -->
+        <div class="excellence-banner">
+          <div class="excellence-logo">
+            <img src="images/logo-dark.png" alt="PROLIFIC" class="excellence-logo-img">
+          </div>
+          <div class="excellence-subtext">a place of excellence</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       MODAL DIALOGS
+       ========================================================================== -->
+  <!-- 1. MEMBER LOGIN MODAL -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>MEMBER LOGIN</h3>
+        <button class="modal-close" id="closeLoginBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="role-tabs">
+          <button class="role-tab active" data-role="founder">Founder</button>
+          <button class="role-tab" data-role="manager">Head Designer</button>
+          <button class="role-tab" data-role="employee">Sub Designer</button>
+        </div>
+
+        <div class="alert-success" id="loginAlert">Login successful! Redirecting to workspace...</div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="name@prolific.com" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-submit">Sign In to Dashboard</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CONTACT US MODAL -->
+  <div class="modal-backdrop" id="contactModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>CONTACT PROLIFIC</h3>
+        <button class="modal-close" id="closeContactBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert-success" id="contactAlert">Thank you! Your message has been received. Our advisory team will contact you shortly.</div>
+
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="contactName">Full Name</label>
+            <input type="text" id="contactName" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Email Address</label>
+            <input type="email" id="contactEmail" class="form-control" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="contactPhone">Phone Number</label>
+            <input type="tel" id="contactPhone" class="form-control" placeholder="+1 (555) 000-0000">
+          </div>
+          <div class="form-group">
+            <label for="contactMessage">Project Details / Message</label>
+            <textarea id="contactMessage" class="form-control" placeholder="Tell us about your residential or commercial project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Submit Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. LIGHTBOX MODAL -->
+  <div class="modal-backdrop lightbox-modal" id="lightboxModal">
+    <div class="modal-card">
+      <img src="" alt="Project Image Preview" id="lightboxImg" class="lightbox-img">
+    </div>
+  </div>
+
+  <!-- 4. PROJECT DETAILS POPUP MODAL (FULL VIBRANT COLOR & LOCATION INFORMATION) -->
+  <div class="modal-backdrop project-details-modal" id="projectDetailsModal" style="display: none;">
+    <div class="project-modal-card">
+      <button type="button" class="project-modal-close" id="closeProjectModalBtn" title="Close Project Details">&times;</button>
+      
+      <div class="project-modal-grid">
+        <!-- Left Column: Full Vibrant Color Image -->
+        <div class="project-modal-image-col">
+          <img src="" alt="Project Image" id="modalProjectImg" class="project-modal-full-color-img">
+          <span class="project-modal-badge" id="modalProjectBadge">ARCHITECTURE</span>
+        </div>
+
+        <!-- Right Column: Location & Full Architecture Details -->
+        <div class="project-modal-info-col">
+          <div class="modal-location-tag" id="modalProjectLocation">
+            📍 Dumas Road Boulevard, Surat, Gujarat
+          </div>
+          
+          <h3 class="modal-project-title" id="modalProjectTitle">PROLIFIC ESTATES</h3>
+          <p class="modal-project-subtitle" id="modalProjectSubtitle">Double-Height Living &amp; Travertine Walls</p>
+
+          <div class="modal-divider"></div>
+
+          <div class="modal-description-block">
+            <h4 class="modal-section-heading">Project Scope &amp; Craftsmanship:</h4>
+            <p id="modalProjectDesc" class="modal-project-desc">
+              Double-height grand living hall featuring roman travertine monolithic walls, suspended sculptural lighting, and acoustic floor-to-ceiling glass façades.
+            </p>
+          </div>
+
+          <div class="modal-specs-pill" id="modalProjectSpecs">
+            Area: 14,000 Sq. Ft. • Execution: Full Structural &amp; Interior Fitout
+          </div>
+
+          <!-- Quick Navigation Buttons (Prev / Next Project) -->
+          <div class="project-modal-nav-row">
+            <button type="button" class="btn-modal-nav" id="modalPrevProjBtn">← Previous Project</button>
+            <button type="button" class="btn-modal-nav" id="modalNextProjBtn">Next Project →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

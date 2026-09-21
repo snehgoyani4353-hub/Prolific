@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROLIFIC | Enterprise Secure Access Portal</title>
+  <meta name="description" content="Prolific Enterprise Secure Member Portal. End-to-End Encrypted Authorization for Founders, Head Designers, and Sub Designers.">
+  <link rel="icon" type="image/png" href="images/logo-dark.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page-body">
+
+  <!-- Back to Prolific Website Button -->
+  <a href="index.html" class="back-home-link">&larr; Back to Prolific Website</a>
+
+  <div class="login-wrapper">
+    <!-- Central 3D Embossed Plaque -->
+    <div class="login-plaque">
+      
+      <!-- Security Status Top Pill -->
+      <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10B981; color: #047857; font-size: 0.72rem; font-weight: 800; padding: 3px 12px; border-radius: 9999px; margin-bottom: 12px; letter-spacing: 0.06em;">
+        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10B981;"></span>
+        256-BIT TLS ENCRYPTED SESSION
+      </div>
+
+      <!-- Header Brand Logo -->
+      <div class="plaque-header">
+        <div class="plaque-logo" style="display: flex; justify-content: center; margin-bottom: 8px;">
+          <img src="images/logo-gold.png" alt="PROLIFIC" class="main-logo-img" style="height: 48px;">
+        </div>
+        <div class="flourish-divider">
+          <span class="line"></span>
+          <span class="dot"></span>
+          <span class="line"></span>
+        </div>
+        <p class="plaque-subtitle" id="plaqueSubtitle">AUTHORIZED ACCESS</p>
+      </div>
+
+      <!-- STEP 1: Metallic Role Selection (FOUNDER, HEAD DESIGNER, SUB DESIGNER, EDITOR) -->
+      <div id="roleSelectionStep" class="role-frame-container">
+        <div class="role-frame-inner" style="display: flex; flex-direction: column; gap: 12px;">
+          <button type="button" class="gold-role-btn" data-role="founder" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; box-sizing: border-box; width: 100%; border: none; text-align: left;">
+            <span style="font-weight: 800; font-size: 1.02rem; letter-spacing: 0.04em;">FOUNDER</span>
+            <span style="font-size: 0.82rem; opacity: 0.85; font-weight: 700;">Executive Portal &rarr;</span>
+          </button>
+          <button type="button" class="gold-role-btn" data-role="manager" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; box-sizing: border-box; width: 100%; border: none; text-align: left;">
+            <span style="font-weight: 800; font-size: 1.02rem; letter-spacing: 0.04em;">HEAD DESIGNER</span>
+            <span style="font-size: 0.82rem; opacity: 0.85; font-weight: 700;">Drawing Workspace &rarr;</span>
+          </button>
+          <button type="button" class="gold-role-btn" data-role="employee" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; box-sizing: border-box; width: 100%; border: none; text-align: left;">
+            <span style="font-weight: 800; font-size: 1.02rem; letter-spacing: 0.04em;">SUB DESIGNER</span>
+            <span style="font-size: 0.82rem; opacity: 0.85; font-weight: 700;">Workforce Portals &rarr;</span>
+          </button>
+          <button type="button" class="gold-role-btn" data-role="editor" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; box-sizing: border-box; width: 100%; border: 1.5px solid #C5A880 !important; text-align: left; background: linear-gradient(135deg, #FAF7F2 0%, #EFE8DC 100%) !important; color: #8A6836 !important;">
+            <span style="font-weight: 800; font-size: 1.02rem; letter-spacing: 0.04em;">EDITOR (CMS &amp; CUSTOMIZER)</span>
+            <span style="font-size: 0.82rem; opacity: 0.85; font-weight: 700;">Visual Content &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Dedicated Dropdown & Password Form (Initially Hidden) -->
+      <div id="credentialsStep" class="plaque-form-container" style="display: none;">
+        <div class="form-header-badge" id="formRoleTitle">FOUNDER ACCESS</div>
+        
+        <div class="alert-success" id="loginSuccessAlert" style="display: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.4;">Authenticating... Opening Workforce Portal...</div>
+
+        <!-- Lockout Banner (Dynamic) -->
+        <div id="lockoutAlert" style="display: none; background: #FEF2F2; border: 1.5px solid #EF4444; color: #991B1B; padding: 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; margin-bottom: 16px;">
+          Access temporarily locked due to excessive failed attempts. Please wait <span id="lockoutTimer">600</span>s.
+        </div>
+
+        <form id="roleAuthForm" autocomplete="off">
+          <!-- Dropdown Name List -->
+          <div class="form-group" style="text-align: left; margin-bottom: 16px;">
+            <label for="personSelect" id="personSelectLabel" class="plaque-label">WHICH FOUNDER ARE YOU?</label>
+            <select id="personSelect" class="plaque-select" required>
+              <!-- Populated dynamically via JavaScript -->
+            </select>
+          </div>
+
+          <!-- Password Input with Toggle -->
+          <div class="form-group" style="text-align: left; position: relative; margin-bottom: 16px;">
+            <label for="personPassword" class="plaque-label">ENTER ACCESS PASSWORD</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="personPassword" class="plaque-input" placeholder="Enter password (e.g. prolific2026)" required style="padding-right: 42px; width: 100%;">
+              <button type="button" id="togglePasswordBtn" style="position: absolute; right: 10px; background: transparent; border: none; cursor: pointer; color: #8A6836; font-size: 1rem; font-weight: 700;" title="Toggle Password Visibility">
+                👁
+              </button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.72rem; color: #64748B;">
+              <span>Default credentials: <strong>prolific2026</strong></span>
+              <span id="attemptTracker" style="color: #94A3B8;">Max 5 attempts</span>
+            </div>
+          </div>
+
+          <button type="submit" class="gold-submit-btn" id="submitAuthBtn">LOGIN TO DASHBOARD &rarr;</button>
+          <button type="button" class="back-role-btn" id="backToRolesBtn">&larr; Change Role</button>
+        </form>
+      </div>
+
+      <!-- Footer Help Links & Security Badges -->
+      <div class="plaque-footer-links">
+        <a href="#help">Help Desk</a>
+        <a href="#trouble">Trouble Logging In?</a>
+        <a href="#security">Security Policy</a>
+      </div>
+
+      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(197, 168, 128, 0.3); font-size: 0.7rem; color: #8C9BAE; display: flex; justify-content: center; align-items: center; gap: 8px;">
+        <span>Prolific Zero-Trust Security Engine</span>
+        <span>•</span>
+        <span>Audit Trail Active</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

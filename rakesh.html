@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROLIFIC | Rakesh's CMS &amp; Visual Editor Dashboard</title>
+  <meta name="description" content="Prolific Comprehensive Visual Content Management System and Landing Page Editor for Rakesh Bhai.">
+  <link rel="icon" type="image/png" href="images/logo-dark.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .editor-section-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E2D9C8;
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(197, 168, 128, 0.08);
+      transition: var(--transition);
+    }
+    .editor-section-card:hover {
+      border-color: #C5A880;
+      box-shadow: 0 8px 28px rgba(197, 168, 128, 0.15);
+    }
+    .editor-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .editor-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 860px) {
+      .editor-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+    .editor-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .editor-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #8A6836;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .editor-hint {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #64748B;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .editor-input,
+    .editor-select,
+    .editor-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #FAF8F4;
+      border: 1.5px solid #DCD2C0;
+      border-radius: 10px;
+      color: #1E2532;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      transition: var(--transition);
+      box-sizing: border-box;
+    }
+    .editor-input:focus,
+    .editor-select:focus,
+    .editor-textarea:focus {
+      background: #FFFFFF;
+      border-color: #C5A880;
+      box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.25);
+      outline: none;
+    }
+    .editor-textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .dynamic-item-card {
+      background: #FAF8F4;
+      border: 1.5px solid #E5DCCB;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .dynamic-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px dashed #DCD2C0;
+      padding-bottom: 8px;
+    }
+    .btn-delete-item {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FCA5A5;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-delete-item:hover {
+      background: #EF4444;
+      color: #FFFFFF;
+    }
+    .btn-add-item {
+      background: #FAF7F2;
+      border: 1.5px dashed #C5A880;
+      color: #8A6836;
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-add-item:hover {
+      background: #F4EBDD;
+      border-color: #8A6836;
+      transform: translateY(-1px);
+    }
+    .gallery-editor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 16px;
+    }
+    .gallery-edit-card {
+      background: #FAF8F4;
+      border: 1.5px solid #DCD2C0;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .gallery-thumb-preview {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #E2D9C8;
+      border: 1px solid #C5A880;
+    }
+    .cms-floating-bar {
+      position: sticky;
+      bottom: 20px;
+      z-index: 100;
+      background: rgba(24, 34, 51, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 2px solid #C5A880;
+      border-radius: 16px;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 24px rgba(197, 168, 128, 0.3);
+      margin-top: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn-save-publish {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: var(--transition);
+    }
+    .btn-save-publish:hover {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+    .btn-view-live {
+      background: #FAF7F2;
+      border: 1.5px solid #C5A880;
+      color: #8A6836;
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .btn-view-live:hover {
+      background: #C5A880;
+      color: #FFFFFF;
+    }
+    .btn-reset-defaults {
+      background: transparent;
+      border: 1.5px solid #94A3B8;
+      color: #CBD5E1;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-reset-defaults:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #EF4444;
+      color: #FCA5A5;
+    }
+    .wf-portal-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #E2D9C8;
+    }
+    .wf-tab-btn {
+      white-space: nowrap;
+      background: #FAF8F4;
+      border: 1px solid #DCD2C0;
+      color: #1E2532;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .wf-tab-btn:hover {
+      background: #EFE8DC;
+      border-color: #C5A880;
+    }
+    .wf-tab-btn.active {
+      background: #182233;
+      color: #C5A880;
+      border-color: #182233;
+    }
+  </style>
+</head>
+<body class="wf-portal-body">
+
+  <!-- TOP APP BAR -->
+  <header class="wf-header">
+    <div class="wf-header-left">
+      <a href="index.html" class="wf-logo-link" title="Prolific Home">
+        <img src="images/logo-dark.png" alt="PROLIFIC" class="wf-header-logo-img">
+      </a>
+      <div class="wf-brand-info">
+        <span class="wf-portal-pill" style="background: rgba(16, 185, 129, 0.12); border-color: #10B981; color: #047857;">CMS &amp; VISUAL EDITOR</span>
+        <span class="wf-engine-subtext">Landing Page &amp; Multi-Section Governance System</span>
+      </div>
+    </div>
+
+    <div class="wf-header-right">
+      <button type="button" class="btn-save-publish" id="btnSaveCmsChanges" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; border: none; padding: 10px 22px; border-radius: 9999px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
+        <span>💾</span> Save &amp; Publish Changes Live
+      </button>
+      <button type="button" class="btn-reset-defaults" id="btnResetCmsDefaults" style="background: #F1F5F9; color: #64748B; border: 1px solid #CBD5E1; padding: 8px 16px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+        🔄 Reset Defaults
+      </button>
+      <a href="login.html" class="btn-back-login" title="Return to Secure Login Portal">← Back to Login</a>
+      <a href="index.html" target="_blank" class="btn-global-exit" title="Open Live Website in New Tab">👁️ View Live Website</a>
+      <div class="user-profile-badge" id="editorProfileBadge">
+        <label for="editorAvatarInput" class="user-avatar-upload-label" title="Click circular photo to add/change profile photo">
+          <input type="file" id="editorAvatarInput" accept="image/*" style="display: none;">
+          <div class="user-avatar-circle" id="editorAvatarCircle">
+            <img src="" id="editorAvatarImg" class="user-avatar-img" alt="Editor Photo" style="display: none;">
+            <span class="user-avatar-initials" id="editorAvatarInitials">R</span>
+            <span class="avatar-camera-icon" title="Add / Change Photo">📷</span>
+          </div>
+        </label>
+        <span id="editorHeaderUserName">Rakesh Bhai (EDITOR)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE LAYOUT -->
+  <div class="wf-workspace-layout">
+
+    <!-- LEFT SIDEBAR: CMS SECTION CATEGORY LIST -->
+    <aside class="wf-sidebar">
+      <div class="sidebar-title">
+        <span>CMS Modules</span>
+      </div>
+
+      <div class="personnel-category">
+        <div class="cat-header">
+          <span>Website Sections</span>
+        </div>
+        <ul class="personnel-list" style="margin-top: 8px;">
+          <li class="person-item active" data-cms-tab="tabHero" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">🏠</span>
+            <span class="name">1. Hero &amp; Main Banner</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabGallery" style="cursor: pointer;">
+            <span class="avatar-badge pink-badge">🖼️</span>
+            <span class="name">2. Projects &amp; Gallery</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabServices" style="cursor: pointer;">
+            <span class="avatar-badge yellow-badge">🛠️</span>
+            <span class="name">3. Our Services</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabWhyChoose" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">💎</span>
+            <span class="name">4. Why Choose Prolific</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabTrackRecord" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">📊</span>
+            <span class="name">5. Track Record &amp; Stats</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabAbout" style="cursor: pointer;">
+            <span class="avatar-badge yellow-badge">📖</span>
+            <span class="name">6. About Us Page</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabContact" style="cursor: pointer;">
+            <span class="avatar-badge pink-badge">📞</span>
+            <span class="name">7. Contact &amp; Studio Info</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabFooter" style="cursor: pointer;">
+            <span class="avatar-badge blue-badge">🏛️</span>
+            <span class="name">8. Footer &amp; Branding</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabTypography" style="cursor: pointer;">
+            <span class="avatar-badge red-badge">🔤</span>
+            <span class="name">9. Fonts &amp; Typography</span>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CMS CONTENT AREA -->
+    <main class="wf-main-content">
+
+      <!-- TAB 1: HERO SECTION -->
+      <section class="cms-panel active" id="tabHero">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            1. HERO SECTION &amp; MAIN HEADINGS
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span>Header Security / Legacy Badge Text</span>
+              <span class="editor-hint">Displays above the main logo</span>
+            </label>
+            <input type="text" id="cmsBrandBadgeText" class="editor-input" value="EST. 2026 • ARCHITECTURAL EXCELLENCE">
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span>Main Hero Title (H1)</span>
+              <span class="editor-hint">Primary headline on landing page</span>
+            </label>
+            <input type="text" id="cmsHeroHeading" class="editor-input" value="Architectural Elegance &amp; Luxury Spaces">
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span>Hero Feature Bullet Highlights</span>
+              <span class="editor-hint">Key bullet points beneath hero title</span>
+            </label>
+            <div id="cmsBulletsContainer">
+              <!-- Dynamically populated bullet rows -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddBullet">➕ Add New Bullet Highlight</button>
+          </div>
+
+          <div class="editor-field-group" style="margin-top: 20px;">
+            <label class="editor-label">
+              <span>Hero Showcase Image (Villa)</span>
+              <span class="editor-hint">Primary right-column image</span>
+            </label>
+            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+              <img src="images/hero-villa.png" id="cmsHeroImgPreview" style="height: 100px; width: 160px; object-fit: cover; border-radius: 10px; border: 1.5px solid #C5A880;" alt="Hero Villa">
+              <div style="flex: 1; min-width: 240px;">
+                <input type="file" id="cmsHeroImgFile" accept="image/*" class="editor-input" style="padding: 8px;">
+                <div style="font-size: 0.76rem; color: #64748B; margin-top: 4px;">Upload custom image (PNG, JPG, WEBP) to replace hero villa image.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PROJECTS GALLERY (3D COVERFLOW) -->
+      <section class="cms-panel" id="tabGallery" style="display: none;">
+        <div class="editor-section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+            <div class="section-title" style="margin: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px;">
+              2. 3D COVERFLOW PROJECTS GALLERY
+            </div>
+            <button type="button" class="btn-save-publish" id="btnOpenAddProjectModal" style="padding: 9px 18px; font-size: 0.85rem;">
+              ➕ Add New Project Card
+            </button>
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Gallery Section Badge Text</label>
+              <input type="text" id="cmsGalleryBadge" class="editor-input" value="PROLIFIC">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Gallery Section Title (H2)</label>
+              <input type="text" id="cmsGalleryTitle" class="editor-input" value="OUR PROJECTS GALLERY">
+            </div>
+          </div>
+
+          <div id="cmsGalleryCardsGrid" class="gallery-editor-grid">
+            <!-- Dynamically populated project cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: OUR SERVICES -->
+      <section class="cms-panel" id="tabServices" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            3. DESIGN &amp; MANAGEMENT SERVICES SECTION
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Services Section Badge Text</label>
+              <input type="text" id="cmsServicesBadge" class="editor-input" value="PROLIFIC">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Services Section Title (H2)</label>
+              <input type="text" id="cmsServicesTitle" class="editor-input" value="OUR DESIGN &amp; MANAGEMENT SERVICES">
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="editor-label" style="margin-bottom: 12px;">Service Offerings &amp; Descriptions</label>
+            <div id="cmsServicesContainer">
+              <!-- Dynamically populated service items -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddService">➕ Add New Service Card</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: WHY CHOOSE PROLIFIC -->
+      <section class="cms-panel" id="tabWhyChoose" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            4. WHY CHOOSE PROLIFIC (CORE PILLARS)
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Section Badge Text</label>
+              <input type="text" id="cmsWhyChooseBadge" class="editor-input" value="PROLIFIC">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Section Title (H2)</label>
+              <input type="text" id="cmsWhyChooseTitle" class="editor-input" value="WHY CHOOSE PROLIFIC">
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="editor-label" style="margin-bottom: 12px;">Value Pillars &amp; Descriptions</label>
+            <div id="cmsWhyChooseContainer">
+              <!-- Dynamically populated why choose cards -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddWhyChoose">➕ Add New Value Pillar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: OUR TRACK RECORD -->
+      <section class="cms-panel" id="tabTrackRecord" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            5. TRACK RECORD &amp; NUMERICAL MILESTONES
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Track Record Badge Text</label>
+              <input type="text" id="cmsTrackRecordBadge" class="editor-input" value="PROLIFIC">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Track Record Title (H2)</label>
+              <input type="text" id="cmsTrackRecordTitle" class="editor-input" value="OUR TRACK RECORD">
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="editor-label" style="margin-bottom: 12px;">Key Metric Cards (Numbers &amp; Labels)</label>
+            <div id="cmsTrackStatsContainer">
+              <!-- Dynamically populated stat cards -->
+            </div>
+            <button type="button" class="btn-add-item" id="btnAddStat">➕ Add New Milestone Stat</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: ABOUT US PAGE & STORY -->
+      <section class="cms-panel" id="tabAbout" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            6. ABOUT US PAGE &amp; CORPORATE STORY
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">About Badge Text</label>
+              <input type="text" id="cmsAboutBadge" class="editor-input" value="OUR STORY">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">About Page Main Headline</label>
+              <input type="text" id="cmsAboutTitle" class="editor-input" value="Pioneering Architectural Grandeur in Gujarat">
+            </div>
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">About Narrative — Paragraph 1</label>
+            <textarea id="cmsAboutP1" class="editor-textarea">Founded on the principles of architectural integrity and uncompromising luxury, Prolific transforms residential and commercial spaces into timeless works of art.</textarea>
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">About Narrative — Paragraph 2</label>
+            <textarea id="cmsAboutP2" class="editor-textarea">Our integrated methodology spans initial conceptual blueprints, high-precision CAD detailing, master artisanship, and turnkey site supervision across Surat, Ahmedabad, and Vadodara.</textarea>
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Founders' Leadership Title</label>
+              <input type="text" id="cmsFoundersTitle" class="editor-input" value="EXECUTIVE LEADERSHIP">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Executive Leadership Philosophy Quote</label>
+              <input type="text" id="cmsFoundersQuote" class="editor-input" value='"Elegance is not merely aesthetic—it is the harmonious dialogue between structural form and living luxury."'>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: CONTACT US & STUDIO INFO -->
+      <section class="cms-panel" id="tabContact" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            7. CONTACT US &amp; STUDIO ADVISORY INFO
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Contact Section Badge Text</label>
+              <input type="text" id="cmsContactBadge" class="editor-input" value="CONNECT WITH PROLIFIC">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Contact Main Headline</label>
+              <input type="text" id="cmsContactTitle" class="editor-input" value="Contact &amp; Studio Advisory">
+            </div>
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Official Studio Address</label>
+              <input type="text" id="cmsAddress" class="editor-input" value="315 Rajhans Montessa, Dumas Rd, Magdalla, Surat, Gujarat 395007">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Contact Phone Numbers</label>
+              <input type="text" id="cmsPhone" class="editor-input" value="+91 98250 12345 / +91 91065 99887">
+            </div>
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Inquiry Email Address</label>
+              <input type="email" id="cmsEmail" class="editor-input" value="inquiry@prolific.in">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Studio Working Hours</label>
+              <input type="text" id="cmsHours" class="editor-input" value="Mon - Sat: 9:30 AM - 7:30 PM (Sunday by Appointment)">
+            </div>
+          </div>
+
+          <!-- SUB-SECTION: BOOK AN APPOINTMENT FORM CUSTOMIZER -->
+          <div style="margin-top: 28px; border-top: 1.5px dashed #D5CCBC; padding-top: 24px;">
+            <div class="section-title" style="margin-top: 0; font-size: 1.1rem; color: #0284C7; border-left: 4px solid #0284C7; padding-left: 10px; margin-bottom: 18px;">
+              📅 BOOK AN APPOINTMENT FORM &amp; DROPDOWN OPTIONS
+            </div>
+
+            <div class="editor-grid-2">
+              <div class="editor-field-group">
+                <label class="editor-label">Form Top Badge Text</label>
+                <input type="text" id="cmsApptBadge" class="editor-input" value="SCHEDULE A SESSION">
+              </div>
+              <div class="editor-field-group">
+                <label class="editor-label">Form Header Title</label>
+                <input type="text" id="cmsApptTitle" class="editor-input" value="Book an Appointment">
+              </div>
+            </div>
+
+            <div class="editor-field-group">
+              <label class="editor-label">Form Subtitle / Intro Text</label>
+              <input type="text" id="cmsApptSubtitle" class="editor-input" value="Reserve a private session with our principal design directors and executive consultants.">
+            </div>
+
+            <!-- Time Slot Options -->
+            <div style="margin-top: 18px;">
+              <label class="editor-label" style="margin-bottom: 8px;">Preferred Time Slot (Dropdown Menu Options)</label>
+              <div id="cmsTimeSlotsContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Populated dynamically via JS -->
+              </div>
+              <button type="button" class="btn-add-item" id="btnAddTimeSlot" style="margin-top: 8px;">➕ Add New Consultation Time Slot</button>
+            </div>
+
+            <!-- Consultation Interest / Service Scope Options -->
+            <div style="margin-top: 22px;">
+              <label class="editor-label" style="margin-bottom: 8px;">Consultation Interest / Service Scope (Dropdown Menu Options)</label>
+              <div id="cmsApptServicesContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Populated dynamically via JS -->
+              </div>
+              <button type="button" class="btn-add-item" id="btnAddApptService" style="margin-top: 8px;">➕ Add New Service Scope Option</button>
+            </div>
+
+            <div class="editor-grid-2" style="margin-top: 22px;">
+              <div class="editor-field-group">
+                <label class="editor-label">Project Scope Notes Input Label</label>
+                <input type="text" id="cmsApptNotesLabel" class="editor-input" value="Project Scope / Specific Requirements">
+              </div>
+              <div class="editor-field-group">
+                <label class="editor-label">Submit Button Label</label>
+                <input type="text" id="cmsApptBtnText" class="editor-input" value="Confirm &amp; Schedule Appointment">
+              </div>
+            </div>
+
+            <div class="editor-field-group">
+              <label class="editor-label">Project Scope Notes Placeholder Text</label>
+              <input type="text" id="cmsApptNotesPlaceholder" class="editor-input" value="Provide property location, estimated sq. ft., or specific architectural styles you have in mind...">
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 8: FOOTER & BRANDING -->
+      <section class="cms-panel" id="tabFooter" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            8. FOOTER, TOUCH BANNER &amp; BRANDING
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">Touch Section Title (H2)</label>
+            <input type="text" id="cmsTouchTitle" class="editor-input" value="Experience the Prolific Touch">
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">Touch Section Description Paragraph</label>
+            <textarea id="cmsTouchDesc" class="editor-textarea">From luxury residential interior transformations to strategic real estate developments, Prolific delivers unmatched elegance, professional project management, and lasting value.</textarea>
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Footer Brand Tagline</label>
+              <input type="text" id="cmsFooterTagline" class="editor-input" value="Pioneering Luxury Interiors &amp; Premier Real Estate Advisory.">
+            </div>
+            <div class="editor-field-group">
+              <label class="editor-label">Excellence Banner Subtext</label>
+              <input type="text" id="cmsExcellenceSubtext" class="editor-input" value="a place of excellence">
+            </div>
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">Footer Copyright Notice</label>
+            <input type="text" id="cmsFooterCopyright" class="editor-input" value="&copy; 2026 Prolific Interiors &amp; Real Estate. All rights reserved.">
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: TYPOGRAPHY & FONTS -->
+      <section class="cms-panel" id="tabTypography" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            9. TYPOGRAPHY &amp; FONT ENGINE
+          </div>
+
+          <div class="editor-grid-2">
+            <div class="editor-field-group">
+              <label class="editor-label">Headings Font Family (H1, H2, H3, Section Titles)</label>
+              <select id="cmsHeadingFont" class="editor-select">
+                <option value="'Playfair Display', Georgia, serif">Playfair Display (Luxury Editorial Serif)</option>
+                <option value="'Cinzel', serif">Cinzel (Royal Classical Roman Serif)</option>
+                <option value="'Cormorant Garamond', Georgia, serif">Cormorant Garamond (Haute Couture Serif)</option>
+                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Ultra-Clean Modern Sans)</option>
+                <option value="'Montserrat', sans-serif">Montserrat (Geometric Architectural Sans)</option>
+                <option value="'Inter', sans-serif">Inter (Precision Tech Sans)</option>
+              </select>
+            </div>
+
+            <div class="editor-field-group">
+              <label class="editor-label">Body &amp; Navigation Font Family</label>
+              <select id="cmsBodyFont" class="editor-select">
+                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Clean Aesthetic Sans)</option>
+                <option value="'Inter', sans-serif">Inter (High Legibility)</option>
+                <option value="'Roboto', sans-serif">Roboto (Geometric Clean)</option>
+                <option value="'Outfit', sans-serif">Outfit (Modern Luxury Display)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="editor-grid-3" style="margin-top: 14px;">
+            <div class="editor-field-group">
+              <label class="editor-label">
+                <span>Hero Title (H1) Font Size</span>
+                <span id="labelHeroSizeVal" style="color: #0369A1; font-family: monospace;">2.8rem</span>
+              </label>
+              <input type="range" id="cmsHeroFontSizeSlider" min="1.8" max="4.0" step="0.1" value="2.8" style="width: 100%; cursor: pointer;">
+            </div>
+
+            <div class="editor-field-group">
+              <label class="editor-label">
+                <span>Section Titles Font Size</span>
+                <span id="labelSectionSizeVal" style="color: #0369A1; font-family: monospace;">2.2rem</span>
+              </label>
+              <input type="range" id="cmsSectionFontSizeSlider" min="1.5" max="3.2" step="0.1" value="2.2" style="width: 100%; cursor: pointer;">
+            </div>
+
+            <div class="editor-field-group">
+              <label class="editor-label">
+                <span>Body Paragraph Font Size</span>
+                <span id="labelBodySizeVal" style="color: #0369A1; font-family: monospace;">1.0rem</span>
+              </label>
+              <input type="range" id="cmsBodyFontSizeSlider" min="0.85" max="1.3" step="0.05" value="1.0" style="width: 100%; cursor: pointer;">
+            </div>
+          </div>
+
+          <!-- Typography Live Preview Box -->
+          <div style="background: #FAF8F4; border: 1.5px solid #C5A880; border-radius: 12px; padding: 20px; margin-top: 20px;">
+            <div style="font-size: 0.75rem; font-weight: 800; color: #8A6836; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Live Typography Preview:</div>
+            <h1 id="previewHeroHeading" style="margin: 0 0 10px 0; color: #182233; line-height: 1.2;">Architectural Elegance &amp; Luxury Spaces</h1>
+            <p id="previewBodyText" style="margin: 0; color: #5A6A80; font-size: 1rem;">Prolific design studio crafts bespoke residences, master penthouses, and structural innovations across Gujarat.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: ADD NEW GALLERY PROJECT -->
+  <div class="modal-backdrop" id="addProjectModal" style="display: none;">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #C5A880; padding-bottom: 12px; margin-bottom: 16px;">
+        <h3 style="margin: 0; color: #8A6836; font-family: var(--font-serif); font-size: 1.2rem;">➕ Add New Gallery Project</h3>
+        <button type="button" id="closeAddProjectModal" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #64748B;">&times;</button>
+      </div>
+      <form id="addNewProjectForm">
+        <div class="editor-field-group">
+          <label class="editor-label">Project Title (e.g. PROLIFIC RESIDENCES)</label>
+          <input type="text" id="newProjTitle" class="editor-input" placeholder="PROLIFIC ROYAL PALACE" required>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">Subtitle</label>
+          <input type="text" id="newProjSubtitle" class="editor-input" placeholder="Bespoke Italian Marble &amp; Private Courtyard" required>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">📍 Location / City</label>
+          <input type="text" id="newProjLocation" class="editor-input" placeholder="e.g. Rajhans Montessa, Dumas Rd, Surat" required>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">Craftsmanship Details / Scope</label>
+          <textarea id="newProjDetails" class="editor-textarea" rows="2" placeholder="Describe the architectural and interior fitout scope..." required></textarea>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">Key Specifications (Specs)</label>
+          <input type="text" id="newProjSpecs" class="editor-input" placeholder="e.g. Area: 12,000 Sq. Ft. • Execution: Full Turnkey" required>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">Discipline Category</label>
+          <select id="newProjCategory" class="editor-select" required>
+            <option value="architecture">Architecture</option>
+            <option value="interior">Interior</option>
+          </select>
+        </div>
+
+        <div class="editor-field-group">
+          <label class="editor-label">Project Photo Upload</label>
+          <input type="file" id="newProjImageFile" accept="image/*" class="editor-input" required>
+          <div style="margin-top: 8px; text-align: center;">
+            <img src="" id="newProjPreview" style="display: none; height: 120px; width: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #C5A880;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-save-publish" style="width: 100%; justify-content: center; margin-top: 14px;">
+          ➕ Add to Live Projects Gallery
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
