@@ -419,10 +419,45 @@ async function computeSHA256(text) {
   return text; // Fallback
 }
 
-// 2. Cryptographic Password Verification with Salt
-async function verifySecurePassword(enteredPassword) {
+// 2. Cryptographic Password Verification with Salt & User-Specific Passwords
+function getUserPasswords() {
+  try {
+    const raw = localStorage.getItem('PROLIFIC_USER_PASSWORDS');
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveUserPassword(userName, newPassword) {
+  try {
+    const passwords = getUserPasswords();
+    passwords[userName] = newPassword;
+    localStorage.setItem('PROLIFIC_USER_PASSWORDS', JSON.stringify(passwords));
+    logSecurityEvent('PASSWORD_CHANGED_SUCCESS', 'SUCCESS', `Password successfully updated for user: ${userName}`, userName);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function verifySecurePassword(enteredPassword, userName = null) {
   if (!enteredPassword) return false;
-  if (enteredPassword === GLOBAL_PASSWORD) return true; // Direct fallback for developer baseline
+  const userPasswords = getUserPasswords();
+
+  // If user has set a custom password, check it
+  if (userName && userPasswords[userName]) {
+    const stored = userPasswords[userName];
+    if (enteredPassword === stored) return true;
+    try {
+      const computed = await computeSHA256(`${enteredPassword}:${SECURE_SALT}`);
+      if (computed === stored) return true;
+    } catch (e) {}
+    return false;
+  }
+
+  // Fallback to baseline default credential
+  if (enteredPassword === GLOBAL_PASSWORD) return true;
   try {
     const computed = await computeSHA256(`${enteredPassword}:${SECURE_SALT}`);
     return computed === SECURE_PASSWORD_HASH;
@@ -843,8 +878,8 @@ function setupRoleAuthSystem() {
         return;
       }
 
-      // Verify Entered Password (prolific2026 or SHA-256 hash)
-      const isValid = await verifySecurePassword(enteredPassword);
+      // Verify Entered Password (prolific2026 or SHA-256 hash or user-specific password)
+      const isValid = await verifySecurePassword(enteredPassword, selectedName);
 
       if (!isValid) {
         const lockoutStatus = recordFailedLoginAttempt(selectedName, activeRoleType);
@@ -6332,7 +6367,12 @@ const DEFAULT_LANDING_CONFIG = {
   footerCopyright: '© 2026 Prolific Interiors & Real Estate. All rights reserved.',
   excellenceSubtext: 'a place of excellence',
 
-  // 10. Book an Appointment Form Config (contact.html)
+  // 10. Social Media Links & Channels (Instagram, Facebook, YouTube)
+  instagramUrl: 'https://instagram.com/prolific_design',
+  facebookUrl: 'https://facebook.com/prolific_interiors',
+  youtubeUrl: 'https://youtube.com/@ProlificLuxuryDesign',
+
+  // 11. Book an Appointment Form Config (contact.html)
   apptBadge: 'SCHEDULE A SESSION',
   apptTitle: 'Book an Appointment',
   apptSubtitle: 'Reserve a private session with our principal design directors and executive consultants.',
@@ -6556,6 +6596,34 @@ function applyLiveLandingConfig() {
   const excellenceSubtextEl = document.querySelector('.excellence-subtext');
   if (excellenceSubtextEl && config.excellenceSubtext) excellenceSubtextEl.textContent = config.excellenceSubtext;
 
+  // Social Links Live Binding (Instagram, Facebook, YouTube)
+  const socialInstagramLinks = document.querySelectorAll('.footer-social-instagram, #footerSocialInstagram');
+  socialInstagramLinks.forEach(el => {
+    let url = (config.instagramUrl || '').trim();
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      url = `https://instagram.com/${url.replace(/^@/, '')}`;
+    }
+    el.href = url || 'https://instagram.com/prolific_design';
+  });
+
+  const socialFacebookLinks = document.querySelectorAll('.footer-social-facebook, #footerSocialFacebook');
+  socialFacebookLinks.forEach(el => {
+    let url = (config.facebookUrl || '').trim();
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      url = `https://facebook.com/${url.replace(/^@/, '')}`;
+    }
+    el.href = url || 'https://facebook.com/prolific_interiors';
+  });
+
+  const socialYoutubeLinks = document.querySelectorAll('.footer-social-youtube, #footerSocialYoutube');
+  socialYoutubeLinks.forEach(el => {
+    let url = (config.youtubeUrl || '').trim();
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      url = `https://youtube.com/${url.startsWith('@') ? url : '@' + url}`;
+    }
+    el.href = url || 'https://youtube.com/@ProlificLuxuryDesign';
+  });
+
   // 8. Contact & Studio Info Live Binding (Contact page & Modal)
   const contactHeaderBadge = document.querySelector('.contact-hero-section .brand-label');
   if (contactHeaderBadge && config.contactBadge) contactHeaderBadge.textContent = config.contactBadge;
@@ -6748,6 +6816,10 @@ function setupEditorDashboard() {
   const cmsFooterTagline = document.getElementById('cmsFooterTagline');
   const cmsExcellenceSubtext = document.getElementById('cmsExcellenceSubtext');
   const cmsFooterCopyright = document.getElementById('cmsFooterCopyright');
+
+  const cmsInstagramUrl = document.getElementById('cmsInstagramUrl');
+  const cmsFacebookUrl = document.getElementById('cmsFacebookUrl');
+  const cmsYoutubeUrl = document.getElementById('cmsYoutubeUrl');
 
   const cmsHeadingFont = document.getElementById('cmsHeadingFont');
   const cmsBodyFont = document.getElementById('cmsBodyFont');
@@ -7232,6 +7304,10 @@ function setupEditorDashboard() {
     if (cmsExcellenceSubtext) cmsExcellenceSubtext.value = currentConfig.excellenceSubtext;
     if (cmsFooterCopyright) cmsFooterCopyright.value = currentConfig.footerCopyright;
 
+    if (cmsInstagramUrl) cmsInstagramUrl.value = currentConfig.instagramUrl || '';
+    if (cmsFacebookUrl) cmsFacebookUrl.value = currentConfig.facebookUrl || '';
+    if (cmsYoutubeUrl) cmsYoutubeUrl.value = currentConfig.youtubeUrl || '';
+
     if (cmsHeadingFont) cmsHeadingFont.value = currentConfig.headingFont;
     if (cmsBodyFont) cmsBodyFont.value = currentConfig.bodyFont;
     if (cmsHeroFontSizeSlider) cmsHeroFontSizeSlider.value = currentConfig.heroTitleSize;
@@ -7379,6 +7455,10 @@ function setupEditorDashboard() {
       if (cmsExcellenceSubtext) currentConfig.excellenceSubtext = cmsExcellenceSubtext.value.trim();
       if (cmsFooterCopyright) currentConfig.footerCopyright = cmsFooterCopyright.value.trim();
 
+      if (cmsInstagramUrl) currentConfig.instagramUrl = cmsInstagramUrl.value.trim();
+      if (cmsFacebookUrl) currentConfig.facebookUrl = cmsFacebookUrl.value.trim();
+      if (cmsYoutubeUrl) currentConfig.youtubeUrl = cmsYoutubeUrl.value.trim();
+
       if (cmsHeadingFont) currentConfig.headingFont = cmsHeadingFont.value;
       if (cmsBodyFont) currentConfig.bodyFont = cmsBodyFont.value;
       if (cmsHeroFontSizeSlider) currentConfig.heroTitleSize = cmsHeroFontSizeSlider.value;
@@ -7445,7 +7525,235 @@ function setupEditorDashboard() {
 }
 
 /* ==========================================================================
-   11. APPLICATION LIFECYCLE INITIALIZER (BOOTSTRAP ALL PORTALS)
+   11. UNIVERSAL CHANGE PASSWORD SYSTEM FOR ALL DASHBOARDS
+   ========================================================================== */
+function setupUniversalPasswordSystem() {
+  // Inject modal into document body if not present
+  if (!document.getElementById('changePasswordModal')) {
+    const modalDiv = document.createElement('div');
+    modalDiv.id = 'changePasswordModal';
+    modalDiv.className = 'modal-backdrop';
+    modalDiv.style.cssText = 'display: none; align-items: center; justify-content: center; z-index: 99999;';
+    modalDiv.innerHTML = `
+      <div class="modal-card" style="max-width: 440px; width: 92%; background: #FFFFFF; border-radius: 16px; border: 1.5px solid #C5A880; box-shadow: 0 25px 50px -12px rgba(24, 34, 51, 0.35); padding: 28px; position: relative; font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 1px solid #EFE8DC; padding-bottom: 14px;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 800; color: #8A6836; background: rgba(197, 168, 128, 0.15); padding: 3px 10px; border-radius: 9999px; margin-bottom: 6px; letter-spacing: 0.05em;">
+              <span>🔒</span> SECURITY VAULT
+            </div>
+            <h3 style="margin: 0; font-size: 1.25rem; font-family: 'Playfair Display', serif; color: #182233; font-weight: 800;">Change Access Password</h3>
+            <p style="margin: 4px 0 0; font-size: 0.78rem; color: #64748B;" id="pwdModalUserIdentity">Update your private portal credentials</p>
+          </div>
+          <button type="button" id="closeChangePasswordBtn" style="background: none; border: none; font-size: 1.4rem; color: #94A3B8; cursor: pointer; padding: 4px 8px; border-radius: 8px;" title="Close">&times;</button>
+        </div>
+
+        <div id="pwdChangeAlert" style="display: none; padding: 10px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; margin-bottom: 16px; line-height: 1.4;"></div>
+
+        <form id="changePasswordForm" autocomplete="off">
+          <div style="margin-bottom: 14px; text-align: left;">
+            <label for="pwdCurrentInput" style="display: block; font-size: 0.76rem; font-weight: 800; color: #1E2532; margin-bottom: 6px; letter-spacing: 0.04em;">CURRENT PASSWORD</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="pwdCurrentInput" required placeholder="Enter current password" style="width: 100%; padding: 10px 40px 10px 14px; border: 1.5px solid #DCD2C0; border-radius: 8px; font-size: 0.88rem; outline: none; box-sizing: border-box;">
+              <button type="button" class="pwd-toggle-btn" data-target="pwdCurrentInput" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #8A6836; font-size: 0.95rem;">👁</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px; text-align: left;">
+            <label for="pwdNewInput" style="display: block; font-size: 0.76rem; font-weight: 800; color: #1E2532; margin-bottom: 6px; letter-spacing: 0.04em;">NEW PASSWORD</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="pwdNewInput" required minlength="6" placeholder="Enter new password (min 6 chars)" style="width: 100%; padding: 10px 40px 10px 14px; border: 1.5px solid #DCD2C0; border-radius: 8px; font-size: 0.88rem; outline: none; box-sizing: border-box;">
+              <button type="button" class="pwd-toggle-btn" data-target="pwdNewInput" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #8A6836; font-size: 0.95rem;">👁</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px; text-align: left;">
+            <label for="pwdConfirmInput" style="display: block; font-size: 0.76rem; font-weight: 800; color: #1E2532; margin-bottom: 6px; letter-spacing: 0.04em;">CONFIRM NEW PASSWORD</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="pwdConfirmInput" required minlength="6" placeholder="Re-enter new password" style="width: 100%; padding: 10px 40px 10px 14px; border: 1.5px solid #DCD2C0; border-radius: 8px; font-size: 0.88rem; outline: none; box-sizing: border-box;">
+              <button type="button" class="pwd-toggle-btn" data-target="pwdConfirmInput" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #8A6836; font-size: 0.95rem;">👁</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" id="btnCancelChangePassword" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #CBD5E1; background: #F8FAFC; color: #64748B; font-weight: 700; font-size: 0.84rem; cursor: pointer;">Cancel</button>
+            <button type="submit" id="btnSubmitChangePassword" style="padding: 10px 22px; border-radius: 8px; border: none; background: linear-gradient(135deg, #182233 0%, #0F172A 100%); color: #C5A880; font-weight: 800; font-size: 0.84rem; cursor: pointer; box-shadow: 0 4px 12px rgba(24, 34, 51, 0.25);">Update Password &rarr;</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modalDiv);
+  }
+
+  // Ensure every dashboard has the Change Password button in header-right
+  const headerRight = document.querySelector('.wf-header-right');
+  if (headerRight && !document.getElementById('btnOpenChangePasswordModal')) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'btnOpenChangePasswordModal';
+    btn.className = 'btn-change-password-header';
+    btn.style.cssText = 'background: rgba(197, 168, 128, 0.15); color: #8A6836; border: 1px solid #C5A880; padding: 7px 14px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;';
+    btn.innerHTML = '<span>🔑</span> Change Password';
+    
+    // Insert before user badge
+    const badge = headerRight.querySelector('.user-profile-badge');
+    if (badge) {
+      headerRight.insertBefore(btn, badge);
+    } else {
+      headerRight.appendChild(btn);
+    }
+  }
+
+  const modal = document.getElementById('changePasswordModal');
+  const openBtns = document.querySelectorAll('#btnOpenChangePasswordModal, .btn-open-change-password');
+  const closeBtn = document.getElementById('closeChangePasswordBtn');
+  const cancelBtn = document.getElementById('btnCancelChangePassword');
+  const form = document.getElementById('changePasswordForm');
+  const alertBox = document.getElementById('pwdChangeAlert');
+  const identitySubtitle = document.getElementById('pwdModalUserIdentity');
+
+  function getActiveDashboardUser() {
+    const session = getValidSession();
+    if (session && session.name) return session.name;
+    const headerName = document.getElementById('headerUserName') ||
+                       document.getElementById('mgrHeaderUserName') ||
+                       document.getElementById('empHeaderUserName') ||
+                       document.getElementById('editorHeaderUserName');
+    if (headerName && headerName.textContent) {
+      return headerName.textContent.replace(/\(.*?\)/g, '').trim();
+    }
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes('editor') || path.includes('rakesh')) return 'Rakesh Bhai';
+    if (path.includes('manager')) return 'Shashikant Bhai';
+    if (path.includes('dashboard')) return 'Gaurav';
+    return 'User';
+  }
+
+  function openModal() {
+    if (!modal) return;
+    const activeUser = getActiveDashboardUser();
+    if (identitySubtitle) {
+      identitySubtitle.innerHTML = `Active Identity: <strong>${activeUser}</strong>`;
+    }
+    if (alertBox) alertBox.style.display = 'none';
+    if (form) form.reset();
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const curInput = document.getElementById('pwdCurrentInput');
+    if (curInput) setTimeout(() => curInput.focus(), 150);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Password visibility toggles
+  document.querySelectorAll('.pwd-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (input) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.textContent = '🔒';
+        } else {
+          input.type = 'password';
+          btn.textContent = '👁';
+        }
+      }
+    });
+  });
+
+  // Handle Form Submit
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const currentVal = document.getElementById('pwdCurrentInput')?.value || '';
+      const newVal = document.getElementById('pwdNewInput')?.value || '';
+      const confirmVal = document.getElementById('pwdConfirmInput')?.value || '';
+      const activeUser = getActiveDashboardUser();
+
+      if (!currentVal) {
+        showAlert('⚠️ Please enter your current password.', 'warn');
+        return;
+      }
+
+      // Verify current password
+      const isCurrentValid = await verifySecurePassword(currentVal, activeUser);
+      if (!isCurrentValid) {
+        showAlert('❌ Current password is incorrect. (Default: prolific2026)', 'error');
+        const curInput = document.getElementById('pwdCurrentInput');
+        if (curInput) curInput.focus();
+        return;
+      }
+
+      if (newVal.length < 6) {
+        showAlert('⚠️ New password must be at least 6 characters long.', 'warn');
+        return;
+      }
+
+      if (newVal !== confirmVal) {
+        showAlert('❌ New password and confirmation do not match.', 'error');
+        const confInput = document.getElementById('pwdConfirmInput');
+        if (confInput) confInput.focus();
+        return;
+      }
+
+      // Save new password
+      const saved = saveUserPassword(activeUser, newVal);
+      if (saved) {
+        showAlert(`✅ Password successfully changed for <strong>${activeUser}</strong>! Please use your new password next time you log in.`, 'success');
+        showToast(`Password updated for ${activeUser}! 🔐`, '🔑');
+        setTimeout(() => {
+          closeModal();
+        }, 1800);
+      } else {
+        showAlert('❌ Failed to update password. Please try again.', 'error');
+      }
+    });
+  }
+
+  function showAlert(msg, type) {
+    if (!alertBox) return;
+    alertBox.innerHTML = msg;
+    alertBox.style.display = 'block';
+    if (type === 'error') {
+      alertBox.style.background = '#FEE2E2';
+      alertBox.style.border = '1px solid #EF4444';
+      alertBox.style.color = '#991B1B';
+    } else if (type === 'warn') {
+      alertBox.style.background = '#FEF3C7';
+      alertBox.style.border = '1px solid #F59E0B';
+      alertBox.style.color = '#92400E';
+    } else if (type === 'success') {
+      alertBox.style.background = '#ECFDF5';
+      alertBox.style.border = '1px solid #10B981';
+      alertBox.style.color = '#065F46';
+    }
+  }
+}
+
+/* ==========================================================================
+   12. APPLICATION LIFECYCLE INITIALIZER (BOOTSTRAP ALL PORTALS)
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   enforcePageAccessGuard();
@@ -7463,6 +7771,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupProposalsManager();
   setupUniversalAvatarSystem();
   setupEditorDashboard();
+  setupUniversalPasswordSystem();
 });
 
 

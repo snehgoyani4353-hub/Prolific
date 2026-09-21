@@ -288,6 +288,9 @@
       <button type="button" class="btn-reset-defaults" id="btnResetCmsDefaults" style="background: #F1F5F9; color: #64748B; border: 1px solid #CBD5E1; padding: 8px 16px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
         🔄 Reset Defaults
       </button>
+      <button type="button" class="btn-change-password-header" id="btnOpenChangePasswordModal" style="background: rgba(197, 168, 128, 0.15); color: #8A6836; border: 1px solid #C5A880; padding: 7px 14px; border-radius: 9999px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;">
+        <span>🔑</span> Change Password
+      </button>
       <a href="login.html" class="btn-back-login" title="Return to Secure Login Portal">← Back to Login</a>
       <a href="index.html" target="_blank" class="btn-global-exit" title="Open Live Website in New Tab">👁️ View Live Website</a>
       <div class="user-profile-badge" id="editorProfileBadge">
@@ -353,6 +356,10 @@
           <li class="person-item" data-cms-tab="tabTypography" style="cursor: pointer;">
             <span class="avatar-badge red-badge">🔤</span>
             <span class="name">9. Fonts &amp; Typography</span>
+          </li>
+          <li class="person-item" data-cms-tab="tabSocial" style="cursor: pointer;">
+            <span class="avatar-badge pink-badge">🌐</span>
+            <span class="name">10. Social Media &amp; Channels</span>
           </li>
         </ul>
       </div>
@@ -762,6 +769,56 @@
             <div style="font-size: 0.75rem; font-weight: 800; color: #8A6836; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">Live Typography Preview:</div>
             <h1 id="previewHeroHeading" style="margin: 0 0 10px 0; color: #182233; line-height: 1.2;">Architectural Elegance &amp; Luxury Spaces</h1>
             <p id="previewBodyText" style="margin: 0; color: #5A6A80; font-size: 1rem;">Prolific design studio crafts bespoke residences, master penthouses, and structural innovations across Gujarat.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 10: SOCIAL MEDIA & CHANNELS -->
+      <section class="cms-panel" id="tabSocial" style="display: none;">
+        <div class="editor-section-card">
+          <div class="section-title" style="margin-top: 0; font-size: 1.2rem; color: #8A6836; border-left: 4px solid #C5A880; padding-left: 10px; margin-bottom: 20px;">
+            10. SOCIAL MEDIA &amp; CHANNELS (INSTAGRAM, FACEBOOK, YOUTUBE)
+          </div>
+
+          <p style="font-size: 0.85rem; color: #64748B; margin-top: -10px; margin-bottom: 20px;">
+            Configure your brand's public social channels. These links and IDs are dynamically rendered with branded icons in the landing page footer and contact sections.
+          </p>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span style="color: #E1306C; font-size: 1.1rem;">📸</span> Instagram Profile ID / URL
+              </span>
+              <span class="editor-hint">e.g. prolific_design or https://instagram.com/prolific_design</span>
+            </label>
+            <input type="text" id="cmsInstagramUrl" class="editor-input" placeholder="https://instagram.com/prolific_design" value="https://instagram.com/prolific_design">
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span style="color: #1877F2; font-size: 1.1rem;">👥</span> Facebook Page ID / URL
+              </span>
+              <span class="editor-hint">e.g. prolific_interiors or https://facebook.com/prolific_interiors</span>
+            </label>
+            <input type="text" id="cmsFacebookUrl" class="editor-input" placeholder="https://facebook.com/prolific_interiors" value="https://facebook.com/prolific_interiors">
+          </div>
+
+          <div class="editor-field-group">
+            <label class="editor-label">
+              <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span style="color: #FF0000; font-size: 1.1rem;">▶️</span> YouTube Channel ID / URL
+              </span>
+              <span class="editor-hint">e.g. @ProlificLuxuryDesign or https://youtube.com/@ProlificLuxuryDesign</span>
+            </label>
+            <input type="text" id="cmsYoutubeUrl" class="editor-input" placeholder="https://youtube.com/@ProlificLuxuryDesign" value="https://youtube.com/@ProlificLuxuryDesign">
+          </div>
+
+          <div style="margin-top: 20px; padding: 16px; background: #FAF8F4; border: 1.5px solid #E2D9CC; border-radius: 10px;">
+            <div style="font-weight: 700; font-size: 0.82rem; color: #8A6836; margin-bottom: 6px;">💡 Live Preview &amp; Verification</div>
+            <div style="font-size: 0.78rem; color: #64748B; line-height: 1.5;">
+              When you click <strong>"Save &amp; Publish Changes Live"</strong>, these URLs will be written immediately into the landing page footer icons. You can also test them directly by clicking them in the footer.
+            </div>
           </div>
         </div>
       </section>
